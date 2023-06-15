@@ -16,7 +16,7 @@ locals {
       max_ttl = var.default_max_ttl
 
       # quotas
-      enable_quota = try(item.quota, null) != null ? true : false
+      enable_quota = try(item.quota, true)
       quota_path = "${coalesce(var.vault_mount_path, "database")}-${item.role_name}"
 
       max_leases = try(item.quota.max_leases, var.default_max_leases)
