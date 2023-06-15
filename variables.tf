@@ -48,3 +48,28 @@ variable "default_max_ttl" {
   type = number
   description = "Vault Namespace"
 }
+
+
+variable "default_max_leases" {
+  default = "100"
+  type = number
+  description = "The maximum number of leases to be allowed by the quota rule. The max_leases must be positive."
+}
+
+variable "default_rate_limit_rate" {
+  default = "10"
+  type = number
+  description = "The maximum number of requests at any given second to be allowed by the quota rule. The rate must be positive."
+}
+
+variable "default_rate_limit_interval" {
+  default = "1"
+  type = number
+  description = "The duration in seconds to enforce rate limiting for"
+}
+
+variable "default_rate_limit_block_interval" {
+  default = "10"
+  type = number
+  description = "If set, when a client reaches a rate limit threshold, the client will be prohibited from any further requests until after the 'block_interval' in seconds has elapsed."
+}

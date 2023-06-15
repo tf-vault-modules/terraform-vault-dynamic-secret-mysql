@@ -17,10 +17,14 @@ module "vault_dynamic_secret_mysql" {
     {
       role_name: "main"
       database_name: "wp-vault-test"
+      quota: {
+        max_leases: 10
+      }
     },
     {
       role_name: "vault-wp-organization"
       database_name: "wp-vault-test"
+      enable_quota: true
     },
     {
       role_name: "dnb"
