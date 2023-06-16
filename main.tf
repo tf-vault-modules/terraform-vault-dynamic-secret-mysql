@@ -36,10 +36,10 @@ resource "vault_database_secret_backend_role" "this" {
 
   db_name = vault_database_secret_backend_connection.this.name
 
-  creation_statements = [
-    "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
-    "GRANT ALL PRIVILEGES ON `${each.value.database_name}`.* TO '{{name}}'@'%';"
-  ]
+  creation_statements   = each.value["creation_statements"]
+  revocation_statements = each.value["revocation_statements"]
+  renew_statements      = each.value["renew_statements"]
+  rollback_statements   = each.value["rollback_statements"]
 
   max_ttl = each.value.max_ttl
   default_ttl = each.value.default_ttl
@@ -65,4 +65,18 @@ resource "vault_quota_rate_limit" "role" {
     vault_database_secret_backend_connection.this,
     vault_database_secret_backend_role.this
   ]
+}
+
+resource "vault_quota_lease_count" "role" {
+  # enterprise only
+  for_each = {
+    for key, item in local.db_roles : key => item
+    if var.lease_count_enabled
+  }
+
+  namespace = var.vault_namespace
+  name = each.value.quota_path
+
+  path = each.value.role_path
+  max_leases = each.value.max_leases
 }

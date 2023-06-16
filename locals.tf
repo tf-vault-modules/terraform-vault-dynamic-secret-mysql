@@ -15,6 +15,12 @@ locals {
       default_ttl = var.default_ttl
       max_ttl = var.default_max_ttl
 
+      # sql statements
+      creation_statements = try(item.creation_statements, var.default_creation_statements)
+      revocation_statements = try(item.revocation_statements, var.default_revocation_statements)
+      renew_statements = try(item.renew_statements, var.default_renew_statements)
+      rollback_statements = try(item.rollback_statements, var.default_rollback_statements)
+
       # quotas
       enable_quota = try(item.quota, null) != null ? true : false
       quota_path = "${coalesce(var.vault_mount_path, "database")}-${item.role_name}"

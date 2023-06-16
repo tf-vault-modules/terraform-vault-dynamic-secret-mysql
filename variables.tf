@@ -72,6 +72,39 @@ variable "token_display_name" {
   description = "Vault Token display name"
 }
 
+variable "lease_count_enabled" {
+  default     = false
+  type = bool
+  description = "ENTERPRISE ONLY! Manage lease count quotas which enforce the number of leases that can be created. \nA lease count quota can be created at the root level or defined on a namespace or mount by specifying a path when creating the quota"
+}
+
+variable "default_creation_statements" {
+  default = [
+    "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
+    "GRANT SELECT ON *.* TO '{{name}}'@'%';"
+  ]
+  type = list(string)
+  description = "SQL Statements to be executed for creation"
+}
+
+variable "default_revocation_statements" {
+  default = null
+  type = list(string)
+  description = "SQL Statements to be executed for revocation"
+}
+
+variable "default_renew_statements" {
+  default = null
+  type = list(string)
+  description = "SQL Statements to be executed for renew"
+}
+
+variable "default_rollback_statements" {
+  default = null
+  type = list(string)
+  description = "SQL Statements to be executed for rollback"
+}
+
 variable "default_ttl" {
   default = 240
   type = number
