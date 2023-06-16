@@ -12,6 +12,7 @@ module "vault_dynamic_secret_mysql" {
   db_password = "123123"
   db_url = "localhost:3306"
   connection_name = "mysql"
+  allowed_roles = ["*"]
 
   roles = [
     {

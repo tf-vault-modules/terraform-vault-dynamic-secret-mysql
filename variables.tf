@@ -23,6 +23,41 @@ variable "db_password" {
   description = "The database VAULT ADMIN password to authenticate with"
 }
 
+variable "tls_ca" {
+  default = ""
+  type = string
+  description = "x509 CA file for validating the certificate presented by the MySQL server. Must be PEM encoded."
+}
+
+variable "tls_certificate_key" {
+  default = ""
+  type = string
+  description = "x509 certificate for connecting to the database. This must be a PEM encoded version of the private key and the certificate combined"
+}
+
+variable "username_template" {
+  default = ""
+  type = string
+  description = "For Vault v1.7+. The template to use for username generation. See the Vault docs"
+}
+variable "max_connection_lifetime" {
+  default = null
+  type = number
+  description = "The maximum number of seconds to keep a connection alive for."
+}
+
+variable "max_idle_connections" {
+  default = null
+  type = number
+  description = "The maximum number of idle connections to maintain."
+}
+
+variable "max_open_connections" {
+  default = null
+  type = number
+  description = "The maximum number of open connections to use."
+}
+
 variable "vault_namespace" {
   default = "root"
   description = "Vault Namespace"
