@@ -57,4 +57,9 @@ resource "vault_quota_rate_limit" "role" {
   rate = each.value.rate
   interval = each.value.interval
   block_interval = each.value.block_interval
+
+  depends_on = [
+    vault_database_secret_backend_connection.mysql,
+    vault_database_secret_backend_role.mysql
+  ]
 }
