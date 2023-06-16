@@ -7,7 +7,7 @@ resource "vault_mount" "db" {
   type = "database"
 }
 
-resource "vault_database_secret_backend_connection" "mysql" {
+resource "vault_database_secret_backend_connection" "this" {
   backend       = vault_mount.db.path
   name          = var.connection_name
   namespace = var.vault_namespace
@@ -29,11 +29,12 @@ resource "vault_database_secret_backend_connection" "mysql" {
 }
 
 
-resource "vault_database_secret_backend_role" "mysql" {
+resource "vault_database_secret_backend_role" "this" {
   for_each = local.db_roles
   name    = each.value.role_name
   backend = vault_mount.db.path
-  db_name = vault_database_secret_backend_connection.mysql.name
+
+  db_name = vault_database_secret_backend_connection.this.name
 
   creation_statements = [
     "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
@@ -61,7 +62,7 @@ resource "vault_quota_rate_limit" "role" {
   block_interval = each.value.block_interval
 
   depends_on = [
-    vault_database_secret_backend_connection.mysql,
-    vault_database_secret_backend_role.mysql
+    vault_database_secret_backend_connection.this,
+    vault_database_secret_backend_role.this
   ]
 }
