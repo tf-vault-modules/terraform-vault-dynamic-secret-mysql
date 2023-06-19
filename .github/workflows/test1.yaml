@@ -91,6 +91,8 @@ jobs:
         echo $VAULT_NAMESPACE
 
         cd examples/basic
+
+        terraform init
         terraform plan -input=false
       env:
         TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
