@@ -8,8 +8,8 @@ resource "vault_mount" "db" {
 }
 
 resource "vault_database_secret_backend_connection" "this" {
-  backend       = vault_mount.db.path
-  name          = var.connection_name
+  backend   = vault_mount.db.path
+  name      = var.connection_name
   namespace = var.vault_namespace
 
   allowed_roles = var.allowed_roles
@@ -17,22 +17,26 @@ resource "vault_database_secret_backend_connection" "this" {
   mysql {
     connection_url = "{{username}}:{{password}}@tcp(${var.db_url})/"
 
-    username_template = "vault-user-{{.RoleName}}-{{(random 8)}}"
-    tls_ca = var.tls_ca
-    tls_certificate_key =var.tls_certificate_key
-    username = var.db_username
-    password = var.db_password
+    username_template       = "vault-user-{{.RoleName}}-{{(random 8)}}"
+    tls_ca                  = var.tls_ca
+    tls_certificate_key     = var.tls_certificate_key
+    username                = var.db_username
+    password                = var.db_password
     max_connection_lifetime = var.max_connection_lifetime
-    max_idle_connections = var.max_idle_connections
-    max_open_connections = var.max_open_connections
+    max_idle_connections    = var.max_idle_connections
+    max_open_connections    = var.max_open_connections
   }
+
+  depends_on = [
+    vault_mount.db,
+  ]
 }
 
 
 resource "vault_database_secret_backend_role" "this" {
   for_each = local.db_roles
-  name    = each.value.role_name
-  backend = vault_mount.db.path
+  name     = each.value.role_name
+  backend  = vault_mount.db.path
 
   db_name = vault_database_secret_backend_connection.this.name
 
@@ -41,9 +45,12 @@ resource "vault_database_secret_backend_role" "this" {
   renew_statements      = each.value["renew_statements"]
   rollback_statements   = each.value["rollback_statements"]
 
-  max_ttl = each.value.max_ttl
+  max_ttl     = each.value.max_ttl
   default_ttl = each.value.default_ttl
 
+  depends_on = [
+    vault_database_secret_backend_connection.this
+  ]
 }
 
 resource "vault_quota_rate_limit" "role" {
@@ -53,12 +60,12 @@ resource "vault_quota_rate_limit" "role" {
   }
 
   namespace = var.vault_namespace
-  name = each.value.quota_path
+  name      = each.value.quota_path
 
   path = each.value.role_path
 
-  rate = each.value.rate
-  interval = each.value.interval
+  rate           = each.value.rate
+  interval       = each.value.interval
   block_interval = each.value.block_interval
 
   depends_on = [
@@ -75,8 +82,8 @@ resource "vault_quota_lease_count" "role" {
   }
 
   namespace = var.vault_namespace
-  name = each.value.quota_path
+  name      = each.value.quota_path
 
-  path = each.value.role_path
+  path       = each.value.role_path
   max_leases = each.value.max_leases
 }

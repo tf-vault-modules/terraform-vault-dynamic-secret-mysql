@@ -4,6 +4,8 @@ jobs:
   go-tests:
     name: Run Terratest Integration Tests
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     services:
       vault:
         image: hashicorp/vault:latest

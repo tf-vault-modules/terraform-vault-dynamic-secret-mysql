@@ -11,6 +11,8 @@ on:
 jobs:
   oidc:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
 
     permissions:
       contents: read  # checkout repository
@@ -32,6 +34,8 @@ jobs:
           - 3306:3306
         env:
           MARIADB_ROOT_PASSWORD: root
+          MARIADB_USER: vault-admin
+          MARIADB_PASSWORD: "123123"
 
     steps:
       - uses: actions/checkout@v3
@@ -47,15 +51,21 @@ jobs:
       # This preconfigures Vault such that we can authenticate to a Vault role
       # and access secrets.
       - name: Setup Vault
+        id: test
         run: |
           # .github/scripts/prepare-vault.sh
 
-          # cd test/
-          make init
-          make plan
+          cd examples/basic
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
+          # vault kv list
         env:
           VAULT_ADDR: http://127.0.0.1:8200
           VAULT_TOKEN: root
+      - run: echo {{ steps.test.outputs }}
+      - run: echo {{ steps.test.outputs }}
+      - run: echo ${{ steps.test.outputs.stdout }}
 
       # We've configured Vault, so now let's act as a user and try to read secrets!
       #
@@ -64,54 +74,26 @@ jobs:
       # We've configured pull requests to be allowed to read the
       # secret path "secret/data/foo/bar".
       # We are unable to read "secret/data/main/secret".
-      # - name: Import Secrets
-      #   uses: hashicorp/vault-action@v2.5.0
-      #   id: secrets
-      #   with:
-      #     exportEnv: false
-      #     url: http://127.0.0.1:8200
-      #     path: github-actions
-      #     method: jwt
-      #     role: oidc-ci-test
-      #     secrets: |
-      #       secret/data/foo/bar fi | MY_SECRET
+      - name: Import Secrets
+        uses: hashicorp/vault-action@v2
+        id: secrets
+        with:
+          exportEnv: false
+          url: http://127.0.0.1:8200
+          method: token
+          token: root
+          secrets: |
+            database/creds/maginfo-wp-1 username | TEST
+        env:
+          VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_TOKEN: root
 
-      # - name: Prove access to secrets
-      #   run: |
-      #     [[ "${{ steps.secrets.outputs.MY_SECRET }}" == "bar" ]]
-
-      # # The 'oidc-ci-test' role is not granted a policy to read
-      # # 'secret/data/main/secret' so this will successfully authenticate
-      # # but fail to pull the 'cdsecret' secret.
-      # - name: Attempt to read secrets outside bound OIDC policy
-      #   uses: hashicorp/vault-action@v2.5.0
-      #   id: failed-secrets1
-      #   continue-on-error: true
-      #   with:
-      #     exportEnv: false
-      #     url: http://127.0.0.1:8200
-      #     path: github-actions
-      #     method: jwt
-      #     role: oidc-ci-test
-      #     secrets: |
-      #       secret/data/main/secret cdsecret | CANT_ACCESS_SECRET
-
-      # - name: We cannot access this secret
-      #   run: |
-      #     [[ "${{ steps.failed-secrets1.outputs.CANT_ACCESS_SECRET }}" == "" ]]
-
-      # # The oidc-cd-test role is bound to the 'main' branch of this repository
-      # # so it cannot be bound to a job running from another branch or a fork.
-      # # This will fail to authenticate.
-      # - name: Attempt to access another OIDC role
-      #   uses: hashicorp/vault-action@v2.5.0
-      #   id: failed-secrets2
-      #   continue-on-error: true
-      #   with:
-      #     exportEnv: false
-      #     url: http://127.0.0.1:8200
-      #     path: github-actions
-      #     method: jwt
-      #     role: oidc-cd-test
-      #     secrets: |
-      #       secret/data/main/secret cdsecret | CANT_ACCESS_SECRET
+      - name: Clear
+        id: clear
+        if: always()
+        run: |
+          cd examples/basic
+          terraform destroy -auto-approve -refresh=false
+        env:
+          VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_TOKEN: root

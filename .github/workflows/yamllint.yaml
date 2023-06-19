@@ -8,6 +8,8 @@ on:
 jobs:
   yamllint:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - uses: actions/checkout@v2
       - name: yamllint

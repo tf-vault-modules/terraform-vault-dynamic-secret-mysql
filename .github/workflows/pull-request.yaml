@@ -7,6 +7,8 @@ jobs:
   # TODO: #22 add job using https://github.com/reviewdog/action-alex
   pre-commit:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
@@ -27,6 +29,8 @@ jobs:
             terraform_tfsec
   tflint:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - uses: actions/checkout@v2
       - name: Install prerequisites
@@ -43,6 +47,8 @@ jobs:
           level: error
   tfsec:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - uses: actions/checkout@v2
       - name: Install prerequisites
@@ -58,6 +64,8 @@ jobs:
           level: warning
   misspell:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - uses: actions/checkout@v2
       - name: misspell
@@ -70,6 +78,8 @@ jobs:
           level: error
   yamllint:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - uses: actions/checkout@v2
       - name: yamllint

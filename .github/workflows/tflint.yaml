@@ -8,6 +8,8 @@ on:
 jobs:
   tflint:
     runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - name: Clone repo
         uses: actions/checkout@master
