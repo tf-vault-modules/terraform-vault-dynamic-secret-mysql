@@ -13,9 +13,11 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           terraform_wrapper: false
+
       - name: Download Go Modules
         working-directory: test
         run: go mod download
+
       - name: Run Go Tests
         working-directory: test
         run: go test -v -tags=integration
