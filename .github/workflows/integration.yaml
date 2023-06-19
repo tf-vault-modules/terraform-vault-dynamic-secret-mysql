@@ -13,10 +13,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-      - run: echo ${{ env.tf_actions_working_dir }}
-      - name: Values
-        run: |
-          ls
       # - run: terraform init
 
       # - id: plan
@@ -25,13 +21,9 @@ jobs:
       # - run: echo ${{ steps.plan.outputs.stdout }}
       # - run: echo ${{ steps.plan.outputs.stderr }}
       # - run: echo ${{ steps.plan.outputs.exitcode }}
-      - name: Download Go Modules
-        working-directory: test
-        run: go mod download
-
       - name: Run Go Tests
-        working-directory: /test
-        run: go test -v -tags=integration
+        run: make plan
+        # run: go test -v -tags=integration
         # env:
         #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
