@@ -4,6 +4,21 @@ jobs:
   go-tests:
     name: Run Terratest Integration Tests
     runs-on: ubuntu-latest
+    services:
+      vault:
+        image: hashicorp/vault:latest
+        ports:
+          - 8200:8200
+        env:
+          VAULT_DEV_ROOT_TOKEN_ID: root
+        options: >-
+          --cap-add=IPC_LOCK
+      maria:
+        image: mariadb:latest
+        ports:
+          - 3306:3306
+        env:
+          MARIADB_ROOT_PASSWORD: root
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-go@v1
