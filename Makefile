@@ -35,12 +35,6 @@ update:
 	pre-commit autoupdate
 	cd test && make upgrade
 
-# .PHONY: plan
-# plan:
-# 	terraform plan
-# 	cd examples/basic && terraform plan
-# 	cd test && make plan
-
 .PHONY: local
 local:
 	cd test && ./local.sh
