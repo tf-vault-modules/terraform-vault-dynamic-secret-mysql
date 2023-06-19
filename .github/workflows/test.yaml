@@ -85,7 +85,7 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/maginfo-wp-1 username | TEST
+            database/creds/main-wp-vault-test username | TEST
         env:
           VAULT_ADDR: http://vault:8200
           VAULT_TOKEN: root
