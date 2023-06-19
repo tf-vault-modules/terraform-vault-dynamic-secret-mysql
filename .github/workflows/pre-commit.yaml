@@ -8,6 +8,8 @@ on:
 jobs:
   pre-commit-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # checkout repository
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
