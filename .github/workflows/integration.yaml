@@ -15,12 +15,14 @@ jobs:
           VAULT_DEV_ROOT_TOKEN_ID: root
         options: >-
           --cap-add=IPC_LOCK
-      maria:
+      mariadb:
         image: mariadb:latest
         ports:
           - 3306:3306
         env:
           MARIADB_ROOT_PASSWORD: root
+          MARIADB_USER: vault-admin
+          MARIADB_PASSWORD: "123123"
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-go@v1
@@ -39,7 +41,10 @@ jobs:
       # - run: echo ${{ steps.plan.outputs.stderr }}
       # - run: echo ${{ steps.plan.outputs.exitcode }}
       - name: Run Go Tests
-        run: make plan
+        run:
+          # make plan
+          cd test
+          go test
         # run: go test -v -tags=integration
         # env:
         #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

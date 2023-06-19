@@ -24,6 +24,12 @@ fmt:
 	cd examples/basic && terraform fmt
 	cd test && make fmt
 
+.PHONY: plan
+plan:
+	terraform plan
+	cd examples/basic && terraform plan
+	cd test && make plan
+
 .PHONY: validate
 validate:
 	terraform validate
@@ -41,6 +47,5 @@ local:
 
 .PHONY: plan
 plan: export TF_COMMAND = plan
-plan: fmt
 plan:
 	cd test && go mod tidy && go test -v -timeout 60m $(wildcard *.go)

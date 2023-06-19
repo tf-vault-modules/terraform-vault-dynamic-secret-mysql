@@ -62,9 +62,7 @@ jobs:
           # vault kv list
         env:
           VAULT_ADDR: http://vault:8200
-          TF_VAR_VAULT_ADDR: http://vault:8200
           VAULT_TOKEN: root
-          TF_VAR_VAULT_TOKEN: root
       - run: echo {{ steps.test.outputs }}
       - run: echo {{ steps.test.outputs }}
       - run: echo ${{ steps.test.outputs.stdout }}
