@@ -4,19 +4,19 @@ name: pre-commit-check
 
 on:
   push:
-    # inputs:
-    #   pre-commit-config:
-    #     description: ""
-    #     required: true
-    #   base-branch:
-    #     description: ""
-    #     required: false
-    #   token:
-    #     description: ""
-    #     required: false
-    #     default: ${{ github.token }}
     branches:
       - main
+  # inputs:
+  #   pre-commit-config:
+  #     description: ""
+  #     required: true
+  #   base-branch:
+  #     description: ""
+  #     required: false
+  #   token:
+  #     description: ""
+  #     required: false
+  #     default: ${{ github.token }}
 
 jobs:
   pre-commit-check:
