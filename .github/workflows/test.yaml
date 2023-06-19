@@ -39,16 +39,16 @@ jobs:
 
       # This preconfigures Vault such that we can authenticate to a Vault role
       # and access secrets.
-      # - name: Setup Vault
-      #   run: |
-      #     .github/scripts/prepare-vault.sh
+      - name: Setup Vault
+        run: |
+          # .github/scripts/prepare-vault.sh
 
-      #     cd test/
-      #     make init
-      #     make apply
-      #   env:
-      #     VAULT_ADDR: http://127.0.0.1:8200
-      #     VAULT_TOKEN: root
+          cd test/
+          make init
+          make plan
+        env:
+          VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_TOKEN: root
 
       # We've configured Vault, so now let's act as a user and try to read secrets!
       #
