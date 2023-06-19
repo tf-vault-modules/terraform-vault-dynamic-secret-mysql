@@ -61,8 +61,8 @@ jobs:
           terraform apply -auto-approve
           # vault kv list
         env:
-          VAULT_ADDR: http://127.0.0.1:8200
-          TF_VAR_VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_ADDR: http://vault:8200
+          TF_VAR_VAULT_ADDR: http://vault:8200
           VAULT_TOKEN: root
           TF_VAR_VAULT_TOKEN: root
       - run: echo {{ steps.test.outputs }}
@@ -81,13 +81,13 @@ jobs:
         id: secrets
         with:
           exportEnv: false
-          url: http://127.0.0.1:8200
+          url: http://vault:8200
           method: token
           token: root
           secrets: |
             database/creds/maginfo-wp-1 username | TEST
         env:
-          VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_ADDR: http://vault:8200
           VAULT_TOKEN: root
 
       - name: Clear
@@ -97,5 +97,5 @@ jobs:
           cd examples/basic
           terraform destroy -auto-approve -refresh=false
         env:
-          VAULT_ADDR: http://127.0.0.1:8200
+          VAULT_ADDR: http://vault:8200
           VAULT_TOKEN: root
