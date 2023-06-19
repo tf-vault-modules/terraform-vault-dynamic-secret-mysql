@@ -34,8 +34,8 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: Install Vault
-        run: .github/scripts/install-vault.sh
+      # - name: Install Vault
+      #   run: .github/scripts/install-vault.sh
 
       # This preconfigures Vault such that we can authenticate to a Vault role
       # and access secrets.
