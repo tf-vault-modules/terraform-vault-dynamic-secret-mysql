@@ -9,8 +9,9 @@ permissions:
   contents: read
 
 env:
-  VAULT_NAMESPACE: "user1"
-  VAULT_ADDR: "HTTP://127.0.0.1:8200"
+  VAULT_NAMESPACE: "root"
+  VAULT_ADDR: "http://vault:8200"
+  VAULT_TOKEN: root
 
 jobs:
   terraform:
@@ -88,6 +89,8 @@ jobs:
       run: |
         echo $VAULT_ADDR
         echo $VAULT_NAMESPACE
+
+        cd examples/basic
         terraform plan -input=false
       env:
         TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
