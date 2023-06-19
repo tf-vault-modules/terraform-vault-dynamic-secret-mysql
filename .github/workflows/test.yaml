@@ -44,7 +44,7 @@ jobs:
           # .github/scripts/prepare-vault.sh
 
           cd test/
-          make test
+          make init
           make plan
         env:
           VAULT_ADDR: http://127.0.0.1:8200

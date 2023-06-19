@@ -35,6 +35,12 @@ jobs:
           VAULT_DEV_ROOT_TOKEN_ID: root
         options: >-
           --cap-add=IPC_LOCK
+      maria:
+        image: mariadb:latest
+        ports:
+          - 3306:3306
+        env:
+          VAULT_DEV_ROOT_TOKEN_ID: root
 
     steps:
     - name: Set JWT Auth Token

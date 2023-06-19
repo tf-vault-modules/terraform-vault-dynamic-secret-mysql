@@ -15,11 +15,11 @@ jobs:
           terraform_wrapper: false
 
       - name: Download Go Modules
-        working-directory: test
+        working-directory: /test
         run: go mod download
 
       - name: Run Go Tests
-        working-directory: test
+        working-directory: /test
         run: go test -v -tags=integration
         # env:
         #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

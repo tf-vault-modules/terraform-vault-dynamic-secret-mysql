@@ -9,6 +9,9 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
@@ -16,11 +19,22 @@ jobs:
 
       - name: Terraform init
         run: terraform init --backend=false
+
+      # Minimal example
       - name: tflint
         uses: reviewdog/action-tflint@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-check
-          filter_mode: nofilter
-          flags: --module
-          level: error
+          github_token: ${{ secrets.github_token }}
+
+      # More complex example
+      - name: tflint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          working_directory: "testdata" # Optional. Change working directory
+          reporter: github-pr-review # Optional. Change reporter
+          fail_on_error: "true" # Optional. Fail action if errors are found
+          filter_mode: "nofilter" # Optional. Check all files, not just the diff
+          tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
+          tflint_rulesets: "azurerm google" # Optional. Extra official rulesets to install
+          flags: "--module" # Optional. Add custom tflint flags
