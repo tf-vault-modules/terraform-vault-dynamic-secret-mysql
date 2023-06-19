@@ -46,7 +46,7 @@ local:
 	cd test && ./local.sh
 
 .PHONY: plan
-test: export TF_COMMAND = plan
-test: fmt
-test:
+plan: export TF_COMMAND = plan
+plan: fmt
+plan:
 	cd test && go mod tidy && go test -v -timeout 60m $(wildcard *.go)
