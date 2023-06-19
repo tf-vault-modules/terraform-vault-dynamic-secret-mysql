@@ -14,12 +14,12 @@ module "vault_dynamic_secret_mysql" {
   connection_name = "mysql"
   allowed_roles = ["*"]
 
-  lease_count_enabled = false
+  # lease_count_enabled = false
 
-  default_creation_statements   = [
-    "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
-    "GRANT ALL PRIVILEGES ON *.* TO '{{name}}'@'%';"
-  ]
+  # default_creation_statements   = [
+  #   "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
+  #   "GRANT ALL PRIVILEGES ON *.* TO '{{name}}'@'%';"
+  # ]
 
   roles = [
     {

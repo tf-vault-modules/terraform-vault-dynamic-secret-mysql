@@ -64,7 +64,8 @@ variable "vault_namespace" {
 }
 
 variable "vault_mount_path" {
-  description = "Vault Token display name"
+  default = "database"
+  description = "Database secret engine mount path"
 }
 
 variable "token_display_name" {
