@@ -1,137 +1,137 @@
-name: 'Terraform'
+# name: 'Terraform'
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
 
-env:
-  VAULT_NAMESPACE: "user1"
-  VAULT_ADDR: "HTTP://127.0.0.1:8200"
+# env:
+#   VAULT_NAMESPACE: "user1"
+#   VAULT_ADDR: "HTTP://127.0.0.1:8200"
 
-jobs:
-  terraform:
+# jobs:
+#   terraform:
 
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    # enveironment: production
-    permissions:
-      contents: read
-      id-token: write
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+#     name: 'Terraform'
+#     runs-on: ubuntu-latest
+#     # enveironment: production
+#     permissions:
+#       contents: read
+#       id-token: write
+#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#     defaults:
+#       run:
+#         shell: bash
 
-    services:
-      vault:
-        image: hashicorp/vault:latest
-        ports:
-          - 8200:8200
-        env:
-          VAULT_DEV_ROOT_TOKEN_ID: root
-        options: >-
-          --cap-add=IPC_LOCK
-      maria:
-        image: mariadb:latest
-        ports:
-          - 3306:3306
-        env:
-          VAULT_DEV_ROOT_TOKEN_ID: root
+#     services:
+#       vault:
+#         image: hashicorp/vault:latest
+#         ports:
+#           - 8200:8200
+#         env:
+#           VAULT_DEV_ROOT_TOKEN_ID: root
+#         options: >-
+#           --cap-add=IPC_LOCK
+#       maria:
+#         image: mariadb:latest
+#         ports:
+#           - 3306:3306
+#         env:
+#           VAULT_DEV_ROOT_TOKEN_ID: root
 
-    steps:
-    - name: Set JWT Auth Token
-      id: auth-token
-      run: |
-          export TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
-          # echo $TOKEN | jq .value | base64
-          echo "token=$(echo $TOKEN)" >> $GITHUB_OUTPUT
+#     steps:
+#     - name: Set JWT Auth Token
+#       id: auth-token
+#       run: |
+#           export TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
+#           # echo $TOKEN | jq .value | base64
+#           echo "token=$(echo $TOKEN)" >> $GITHUB_OUTPUT
 
-    - name: Get Vault Github Token
-      id: grab-token
-      run: |
-          export TOKEN_JSON=$(echo $GITHUB_OIDC_TOKEN | jq "{ jwt: .value, role: \"$VAULT_ROLE\" }")
-          # echo $TOKEN_JSON | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
-          # export VAULT_LOGIN_DATA=$(echo $TOKEN_JSON | curl -sSLf -X PUT -H "Content-Type: application/json" --data @- $VAULT_ADDR/v1/auth/jwt/login)
+#     - name: Get Vault Github Token
+#       id: grab-token
+#       run: |
+#           export TOKEN_JSON=$(echo $GITHUB_OIDC_TOKEN | jq "{ jwt: .value, role: \"$VAULT_ROLE\" }")
+#           # echo $TOKEN_JSON | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
+#           # export VAULT_LOGIN_DATA=$(echo $TOKEN_JSON | curl -sSLf -X PUT -H "Content-Type: application/json" --data @- $VAULT_ADDR/v1/auth/jwt/login)
 
-          # echo $VAULT_LOGIN_DATA
-          # export VAULT_TOKEN=$(echo $VAULT_LOGIN_DATA | jq -r .auth.client_token)
-          # echo $VAULT_TOKEN
-          # echo "vault_token=$(echo $VAULT_TOKEN)" >> $GITHUB_OUTPUT
+#           # echo $VAULT_LOGIN_DATA
+#           # export VAULT_TOKEN=$(echo $VAULT_LOGIN_DATA | jq -r .auth.client_token)
+#           # echo $VAULT_TOKEN
+#           # echo "vault_token=$(echo $VAULT_TOKEN)" >> $GITHUB_OUTPUT
 
-      env:
-        VAULT_ROLE: "git-onboarding"
-        GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}
+#       env:
+#         VAULT_ROLE: "git-onboarding"
+#         GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}
 
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
+#     # Checkout the repository to the GitHub Actions runner
+#     - name: Checkout
+#       uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v1
+#       with:
+#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: |
-        terraform init -input=false
+#     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+#     - name: Terraform Init
+#       run: |
+#         terraform init -input=false
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: |
-        echo $VAULT_ADDR
-        echo $VAULT_NAMESPACE
-        terraform plan -input=false
-      env:
-        TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
-        TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
-        TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
-        TF_LOG: debug
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan
+#       run: |
+#         echo $VAULT_ADDR
+#         echo $VAULT_NAMESPACE
+#         terraform plan -input=false
+#       env:
+#         TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
+#         TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
+#         TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
+#         TF_LOG: debug
 
-    #   # On push to "main", build or change infrastructure according to Terraform configuration files
-    #   # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    # - name: Terraform Apply
-    #   run: terraform apply -auto-approve -input=false -target=module.create_namespace
-    #   env:
-    #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
-    #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
-    #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
-    #     TF_LOG: debug
+#     #   # On push to "main", build or change infrastructure according to Terraform configuration files
+#     #   # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+#     # - name: Terraform Apply
+#     #   run: terraform apply -auto-approve -input=false -target=module.create_namespace
+#     #   env:
+#     #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
+#     #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
+#     #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
+#     #     TF_LOG: debug
 
-    # - name: Terraform Apply
-    #   run: terraform apply -auto-approve -input=false
-    #   env:
-    #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
-    #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
-    #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
-    #     TF_LOG: debug
+#     # - name: Terraform Apply
+#     #   run: terraform apply -auto-approve -input=false
+#     #   env:
+#     #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
+#     #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
+#     #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
+#     #     TF_LOG: debug
 
-    # - name: Terraform Show Output
-    #   run: terraform output admin_token
-    #   env:
-    #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
-    #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
-    #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
+#     # - name: Terraform Show Output
+#     #   run: terraform output admin_token
+#     #   env:
+#     #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
+#     #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
+#     #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
 
-    # REVOKE GITHUB TOKEN !!!!!
-    - name: Revoke Github Token
-      run: |
-        curl -sSLf -X PUT -H "Content-Type: application/json" -H X-Vault-Token:${VAULT_TOKEN} $VAULT_ADDR/v1/auth/token/revoke-self
-      env:
-        VAULT_TOKEN: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
+#     # REVOKE GITHUB TOKEN !!!!!
+#     - name: Revoke Github Token
+#       run: |
+#         curl -sSLf -X PUT -H "Content-Type: application/json" -H X-Vault-Token:${VAULT_TOKEN} $VAULT_ADDR/v1/auth/token/revoke-self
+#       env:
+#         VAULT_TOKEN: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
 
-    # - name: Generate User Token
-    #   id: grab-token
-    #   run: |
-    #       export VAULT_LOGIN_DATA=$(echo $TOKEN_JSON | curl -sSLf -X PUT -H X-Vault-Token: ${{ steps.grab-token.outputs.VAULT_TOKEN }} -H X-Vault-Namespace: ${{ steps.grab-token.outputs.VAULT_NAMESPACE }} $VAULT_ADDR/v1/auth/jwt/login)
+#     # - name: Generate User Token
+#     #   id: grab-token
+#     #   run: |
+#     #       export VAULT_LOGIN_DATA=$(echo $TOKEN_JSON | curl -sSLf -X PUT -H X-Vault-Token: ${{ steps.grab-token.outputs.VAULT_TOKEN }} -H X-Vault-Namespace: ${{ steps.grab-token.outputs.VAULT_NAMESPACE }} $VAULT_ADDR/v1/auth/jwt/login)
 
-    #       echo $VAULT_LOGIN_DATA
-    #       export VAULT_TOKEN=$(echo $VAULT_LOGIN_DATA | jq -r .auth.client_token)
-    #       echo $VAULT_TOKEN
-    #       echo "vault_token=$(echo $VAULT_TOKEN)" >> $GITHUB_OUTPUT
-    # - name: Revoke Github token
+#     #       echo $VAULT_LOGIN_DATA
+#     #       export VAULT_TOKEN=$(echo $VAULT_LOGIN_DATA | jq -r .auth.client_token)
+#     #       echo $VAULT_TOKEN
+#     #       echo "vault_token=$(echo $VAULT_TOKEN)" >> $GITHUB_OUTPUT
+#     # - name: Revoke Github token

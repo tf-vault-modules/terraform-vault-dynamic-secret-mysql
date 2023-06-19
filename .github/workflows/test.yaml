@@ -16,6 +16,7 @@ jobs:
       contents: read  # checkout repository
       id-token: write  # create
 
+
     services:
       vault:
         image: hashicorp/vault:latest
@@ -25,6 +26,12 @@ jobs:
           VAULT_DEV_ROOT_TOKEN_ID: root
         options: >-
           --cap-add=IPC_LOCK
+      maria:
+        image: mariadb:latest
+        ports:
+          - 3306:3306
+        env:
+          MARIADB_ROOT_PASSWORD: root
 
     steps:
       - uses: actions/checkout@v3
