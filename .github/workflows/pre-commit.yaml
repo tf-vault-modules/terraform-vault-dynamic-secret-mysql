@@ -1,20 +1,20 @@
 name: pre-commit-check
 # description: ""
 
-inputs:
-  pre-commit-config:
-    description: ""
-    required: true
-  base-branch:
-    description: ""
-    required: false
-  token:
-    description: ""
-    required: false
-    default: ${{ github.token }}
 
 on:
   push:
+    # inputs:
+    #   pre-commit-config:
+    #     description: ""
+    #     required: true
+    #   base-branch:
+    #     description: ""
+    #     required: false
+    #   token:
+    #     description: ""
+    #     required: false
+    #     default: ${{ github.token }}
     branches:
       - main
 
@@ -25,7 +25,7 @@ jobs:
       contents: read  # checkout repository
     steps:
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
 
