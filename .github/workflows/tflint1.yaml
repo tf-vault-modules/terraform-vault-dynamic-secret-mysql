@@ -1,4 +1,4 @@
-name: Lint
+name: Lint (ReviewDog)
 on:
   push:
     branches: [ master ]
@@ -6,6 +6,7 @@ on:
 
 jobs:
   tflint:
+    name: runner / tflint
     runs-on: ${{ matrix.os }}
 
     strategy:

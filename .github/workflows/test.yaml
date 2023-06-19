@@ -43,7 +43,7 @@ jobs:
         run: |
           # .github/scripts/prepare-vault.sh
 
-          cd test/
+          # cd test/
           make init
           make plan
         env:

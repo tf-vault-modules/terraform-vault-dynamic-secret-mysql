@@ -1,5 +1,5 @@
 name: pre-commit-check
-description: ""
+# description: ""
 
 inputs:
   pre-commit-config:
