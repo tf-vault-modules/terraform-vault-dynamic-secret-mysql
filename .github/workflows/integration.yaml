@@ -10,12 +10,22 @@ jobs:
         with:
           go-version: 1.13
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
+      - name: Values
+        run: |
+          ls
+      - run: terraform init
 
+      - id: plan
+        run: terraform plan -no-color
+
+      - run: echo ${{ steps.plan.outputs.stdout }}
+      - run: echo ${{ steps.plan.outputs.stderr }}
+      - run: echo ${{ steps.plan.outputs.exitcode }}
       - name: Download Go Modules
-        working-directory: /test
+        working-directory: test
         run: go mod download
 
       - name: Run Go Tests
