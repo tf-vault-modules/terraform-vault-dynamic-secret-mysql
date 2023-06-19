@@ -21,7 +21,7 @@ jobs:
       - name: pre-commit
         uses: pre-commit/action@v2.0.3
         env:
-          AWS_DEFAULT_REGION: us-east-1
+          DUMMY: dummy
           # many of these are covered by better reviewdog linters below
           SKIP: >-
             terraform_tflint_deep,
