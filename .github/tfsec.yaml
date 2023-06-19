@@ -1,20 +1,23 @@
 ---
-name: misspell
+name: tfsec
 on:
   push:
     branches:
       - main
 
 jobs:
-  misspell:
+  tfsec:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: misspell
-        uses: reviewdog/action-misspell@v1
+      - name: Install prerequisites
+        run: ./bin/install-ubuntu.sh
+      - name: Terraform init
+        run: terraform init --backend=false
+      - name: tfsec
+        uses: reviewdog/action-tfsec@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          locale: "US"
           reporter: github-check
           filter_mode: nofilter
           level: error

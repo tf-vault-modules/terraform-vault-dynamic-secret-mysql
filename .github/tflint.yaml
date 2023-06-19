@@ -1,20 +1,24 @@
 ---
-name: misspell
+name: tflint
 on:
   push:
     branches:
       - main
 
 jobs:
-  misspell:
+  tflint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: misspell
-        uses: reviewdog/action-misspell@v1
+      - name: Install prerequisites
+        run: ./bin/install-ubuntu.sh
+      - name: Terraform init
+        run: terraform init --backend=false
+      - name: tflint
+        uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          locale: "US"
           reporter: github-check
           filter_mode: nofilter
+          flags: --module
           level: error
