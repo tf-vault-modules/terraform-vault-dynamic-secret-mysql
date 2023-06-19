@@ -1,4 +1,3 @@
-<!-- BEGIN_TF_DOCS -->
 # Creating modules for AWS I&A Organization
 
 This repo template is used to seed Terraform Module templates for the [AWS I&A GitHub organization](https://github.com/aws-ia). Usage of this template is allowed per included license. PRs to this template will be considered but are not guaranteed to be included. Consider creating an issue to discuss a feature you want to include before taking the time to create a PR.
@@ -88,4 +87,3 @@ No inputs.
 ## Outputs
 
 No outputs.
-<!-- END_TF_DOCS -->
