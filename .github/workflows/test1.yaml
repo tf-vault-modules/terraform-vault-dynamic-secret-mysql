@@ -99,8 +99,15 @@ jobs:
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          url: http://vault:8200
+          url: ${{ env.VAULT_ADDR }}
           method: token
           token: root
           secrets: |
-            database/creds/testorg-wp-1 username | TEST
+            database/creds/testorg-wp-1 username | USERNAME ;
+            database/creds/testorg-wp-1 password | PASSWORD
+
+      - run: echo ${{ steps.secrets.outputs.USERNAME }}
+      - run: echo ${{ steps.secrets.outputs.PASSWORD }}
+      - name: Check connection to MySql with new user
+        run: |
+          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show databases;"
