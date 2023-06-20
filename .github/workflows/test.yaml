@@ -13,7 +13,7 @@ env:
   VAULT_ADDR: http://127.0.0.1:8200
   VAULT_TOKEN: root
 jobs:
-  test-:
+  module-test:
     runs-on: ubuntu-latest
 
     permissions:
@@ -58,7 +58,7 @@ jobs:
       - name: Update vault-admin grants
         run: |
           mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
-          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp-vault-test;"
+          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE 'wp-vault-test';"
 
       - name: Execute Terraform Plan
         id: test
