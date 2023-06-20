@@ -1,17 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-Any arbitrary text can be placed anywhere in the content
 
-<!-- BEGIN\_TF\_DOCS -->
-# TF-Modules: Dynamic Secrets (MySql)
-
-| Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
-
-[![tflint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml)
-[![tfsec](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml)
-[![yamllint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml)
-[![misspell](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml)
-
-[![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
 
 <!-- markdownlint-disable MD001 -->
 # How to use this module
@@ -40,33 +28,23 @@ module "vault_dynamic_secret_mysql" {
 
 ## Module Documentation
 
-## Module Standards
+<!-- BEGIN\_TF\_DOCS -->
+# TF-Modules: Dynamic Secrets (MySql)
 
-For best practices and information on developing with Terraform, see the [I&A Module Standards](https://aws-ia.github.io/standards-terraform/)
+| Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
 
-<!-- END\_TF\_DOCS -->
+[![tflint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml)
+[![tfsec](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml)
+[![yamllint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml)
+[![misspell](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml)
 
-## License
-
-This project is licensed under the [Apache License 2.0](https://github.com/shibayan/terraform-azurerm-keyvault-acmebot/blob/master/LICENSE)
-
-{{ .Content }}
-
-and even in between sections. also spaces will be preserved:
-
-- item 1
-- item 1-1
-- item 1-2
-- item 2
-- item 3
+[![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_vault"></a> [vault](#provider\_vault) | >= 3.10.0 |
-
-and they don't even need to be in the default order
 
 ## Outputs
 

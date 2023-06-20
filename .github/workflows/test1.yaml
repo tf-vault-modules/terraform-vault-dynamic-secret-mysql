@@ -12,7 +12,7 @@ permissions:
 
 env:
   VAULT_NAMESPACE: "root"
-  VAULT_ADDR: "http://127.0.0.1:8200"
+  VAULT_ADDR: "http://vault:8200"
   VAULT_TOKEN: root
 
 jobs:
@@ -99,7 +99,7 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color
-      continue-on-error: true
+      continue-on-error: false
 
     - name: Import Secrets
       uses: hashicorp/vault-action@v2
