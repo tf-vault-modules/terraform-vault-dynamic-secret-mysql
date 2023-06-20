@@ -10,7 +10,7 @@ on:
       - main
 env:
   VAULT_NAMESPACE: "root"
-  VAULT_ADDR: http://127.0.0.1:8200
+  VAULT_ADDR: http://vault:8200
   VAULT_TOKEN: root
 jobs:
   module-test:
@@ -82,7 +82,7 @@ jobs:
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          url: http://127.0.0.1:8200
+          url: http://vault:8200
           method: token
           token: root
           secrets: |
