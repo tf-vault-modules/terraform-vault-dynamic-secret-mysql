@@ -15,8 +15,8 @@ env:
 jobs:
   oidc:
     runs-on: ubuntu-latest
-    container:
-      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
+    # container:
+    #   image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
 
     permissions:
       contents: read  # checkout repository

@@ -12,8 +12,8 @@ jobs:
   # TODO: #22 add job using https://github.com/reviewdog/action-alex
   pre-commit:
     runs-on: ubuntu-latest
-    container:
-      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
+    # container:
+    #   image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
     steps:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
