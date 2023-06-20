@@ -33,15 +33,15 @@ jobs:
         options: >-
           --cap-add=IPC_LOCK
       mariadb:
-        image: mariadb:latest
-        ports:
-          - 3306
+        image: mysql:5.7
         env:
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: password
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+            MYSQL_DATABASE: database
+            MYSQL_USER: foo
+            MYSQL_PASSWORD: bar
+            MYSQL_ROOT_PASSWORD: bar
+        ports:
+            - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - uses: actions/checkout@v3
       - name: Verify MariaDB connection
