@@ -6,29 +6,23 @@
 
 module "vault_dynamic_secret_mysql" {
   source = "../.."
+  # source  = "tf-vault-modules/dynamic-secrets-mysql/vault"
+  # version = "1.0.x"
+
 
   vault_mount_path = "database"
   db_username      = "vault-admin"
   db_password      = "Pa$$w0rd"
-  db_url           = "mariadb:3306"
+  db_url           = "127.0.0.1:3306"
   connection_name  = "mysql"
   allowed_roles    = ["*"]
-
-  # lease_count_enabled = false
-
-  # default_creation_statements   = [
-  #   "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
-  #   "GRANT ALL PRIVILEGES ON *.* TO '{{name}}'@'%';"
-  # ]
 
   roles = [
     {
       role_name : "testorg--wp-1"
-      database_name : "wp_vault_test"
     },
     {
       role_name : "main"
-      database_name : "wp-vault-test"
       quota : {
         max_leases : 10
       }
@@ -40,16 +34,13 @@ module "vault_dynamic_secret_mysql" {
     },
     {
       role_name : "google--wp-1"
-      database_name : "wp-vault-test"
       quota : {}
     },
     {
       role_name : "org1--wp-1"
-      database_name : "wp-1"
     },
     {
       role_name : "maginfo-wp-1"
-      database_name : "wp-1"
     },
 
   ]

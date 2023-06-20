@@ -5,12 +5,11 @@
 
 | Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
 
-[![tflint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml)
-[![tfsec](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml)
-[![yamllint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml)
-[![misspell](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml)
+[![Linters](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/linters.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/linters.yaml)
 
 [![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
+
+[![Module Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml)
 
 
 <!-- markdownlint-disable MD001 -->
@@ -59,6 +58,26 @@ List of roles that will be created for database secret engine.
     * rate: 10
     * interval: 1
     * block_interval: 10
+
+
+## FAQ
+
+Q: How can I restrict role to only one database?
+
+A: Use creation_statements for that role ([Basic example](<https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/blob/5729abb21eb00c8b84ee6b53eec1ef0523998e8e/examples/basic/main.tf#L36>))
+
+**Q:** Do I have to prepare MySQL/MariaDB vault-admin user?
+
+**A:** Absolutely! For test purposes, try to use following statements in your MySQL:
+
+```SQL
+DROP USER IF EXISTS 'vault-admin'@'%';
+CREATE DATABASE IF NOT EXISTS `test-db`;
+CREATE USER 'vault-admin'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;
+```
+
+and use test-db in your module call.
 
 ## Providers
 
