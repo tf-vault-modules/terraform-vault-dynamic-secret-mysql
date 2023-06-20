@@ -31,7 +31,7 @@ module "vault_dynamic_secret_mysql" {
       # ONLY NEEDED PERMISSIONS FOR WORDPRESS DATABASE
       creation_statements = [
         "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
-        "GRANT SELECT, UPDATE, INSERT, DELETE, ALTER, CREATE, DROP, ALTER, INDEX ON `wp-vault-test`.* TO '{{name}}'@'%';"
+        "GRANT SELECT, UPDATE, INSERT, DELETE, ALTER, CREATE, DROP, ALTER, INDEX ON 'wp_vault_test'.* TO '{{name}}'@'%';"
       ]
     },
     {
