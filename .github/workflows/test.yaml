@@ -83,7 +83,15 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/testorg-wp-1 username | TEST
+            database/creds/testorg-wp-1 username | USERNAME
+            database/creds/testorg-wp-1 password | PASSWORD
+
+      - name: Check connection to MySql with new user
+        run: |
+          sudo apt update
+          sudo apt install mysql-client -y
+          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show tables();"
+
 
       # database/creds/testorg-wp_vault_test username | TEST
       # - name: Clear
