@@ -1,5 +1,5 @@
 ---
-name: pull request
+name: Linters
 on:
   pull_request:
     branches:
