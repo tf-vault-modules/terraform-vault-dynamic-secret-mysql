@@ -10,8 +10,9 @@ on:
       - main
 env:
   VAULT_NAMESPACE: "root"
-  VAULT_ADDR: http://vault:8200
+  VAULT_ADDR: http://127.0.0.1:8200
   VAULT_TOKEN: root
+
 jobs:
   module-test:
     runs-on: ubuntu-latest
@@ -32,16 +33,17 @@ jobs:
           VAULT_LOG_LEVEL: debug
         options: >-
           --cap-add=IPC_LOCK
-      mariadb:
-        image: mysql:5.7
-        env:
-          MYSQL_USER: vault-admin
-          MYSQL_PASSWORD: paSSw0rD
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: wp_vault_test
-        ports:
-            - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+      # mariadb:
+      #   image: mysql:5.7
+      #   env:
+      #     MYSQL_HOST: 127.0.0.1
+      #     MYSQL_USER: vault-admin
+      #     MYSQL_PASSWORD: paSSw0rD
+      #     MYSQL_ROOT_PASSWORD: root
+      #     MYSQL_DATABASE: wp_vault_test
+      #   ports:
+      #       - 3306:3306
+      #   options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       # - name: Verify MariaDB connection
       #   env:
@@ -50,6 +52,10 @@ jobs:
       #     while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
       #       sleep 1
       #     done
+      - uses: mirromutth/mysql-action@master
+        with:
+          mysql version: '8.0'
+          mysql root password: paSSw0rD
 
       - uses: actions/checkout@v3
 
@@ -60,8 +66,11 @@ jobs:
 
       - name: Update vault-admin grants
         run: |
-          # mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp_vault_test;"
-          # mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
+          sudo apt update
+          sudo apt install mysql-client -y
+          mysql --host 127.0.0.1 -uroot -ppaSSw0rD -e "CREATE DATABASE IF NOT EXISTS wp_vault_test;"
+          mysql --host 127.0.0.1 -uroot -ppaSSw0rD -e "CREATE USER IF NOT EXISTS 'vault-admin'@'%' IDENTIFIED WITH mysql_native_password BY 'paSSw0rD';"
+          mysql --host 127.0.0.1 -uroot -ppaSSw0rD -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
 
       - name: Execute Terraform Plan
         id: test
@@ -82,7 +91,7 @@ jobs:
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          url: http://vault:8200
+          url: ${{ env.VAULT_ADDR }}
           method: token
           token: root
           secrets: |
