@@ -29,9 +29,9 @@ jobs:
       id-token: write
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    # defaults:
-      # run:
-        # shell: bash
+    defaults:
+      run:
+        shell: bash
         # working-directory: "examples/test"
     services:
       vault:
@@ -71,24 +71,29 @@ jobs:
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
+        working-directory: "examples/test"
 
       - name: Terraform Init
         id: init
         run: terraform init
+        working-directory: "examples/test"
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        working-directory: "examples/test"
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
         continue-on-error: false
+        working-directory: "examples/test"
 
       - name: Terraform Plan
         id: apply
         run: terraform apply -auto-approve
         continue-on-error: false
+        working-directory: "examples/test"
 
       - name: Import Secrets
         uses: hashicorp/vault-action@v2
