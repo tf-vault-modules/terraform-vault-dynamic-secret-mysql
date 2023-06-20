@@ -31,6 +31,18 @@ variable "db_password" {
   description = "The database VAULT ADMIN password to authenticate with"
 }
 
+variable "username_prefix" {
+  type        = string
+  default     = "v-"
+  description = "Prefix for user created in database"
+}
+
+variable "username_template" {
+  default     = "{{.RoleName}}-{{(random 8)}}"
+  type        = string
+  description = "For Vault v1.7+. The template to use for username generation. See the Vault docs"
+}
+
 variable "tls_ca" {
   default     = ""
   type        = string
@@ -42,12 +54,6 @@ variable "tls_certificate_key" {
   type        = string
   description = "x509 certificate for connecting to the database. This must be a PEM encoded version of the private key and the certificate combined"
 }
-
-# variable "username_template" {
-#   default     = ""
-#   type        = string
-#   description = "For Vault v1.7+. The template to use for username generation. See the Vault docs"
-# }
 
 variable "max_connection_lifetime" {
   default     = null
