@@ -29,10 +29,10 @@ jobs:
       id-token: write
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
+    # defaults:
+      # run:
         # shell: bash
-        working-directory: "examples/test"
+        # working-directory: "examples/test"
     services:
       vault:
         image: hashicorp/vault:latest
