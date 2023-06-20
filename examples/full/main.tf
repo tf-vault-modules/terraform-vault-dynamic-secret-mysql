@@ -10,12 +10,14 @@ module "vault_dynamic_secret_mysql" {
   # version = "1.0.x"
 
 
-  vault_mount_path = "dynamic-db-full"
-  db_username      = "vault-admin"
-  db_password      = "Pa$$w0rd"
-  db_url           = "127.0.0.1:3306"
-  connection_name  = "mysql"
-  allowed_roles    = ["*"]
+  vault_mount_path  = "dynamic-db-full"
+  db_username       = "vault-admin"
+  db_password       = "Pa$$w0rd"
+  db_url            = "127.0.0.1:3306"
+  connection_name   = "mysql"
+  allowed_roles     = ["*"]
+  username_prefix   = "vu-"
+  username_template = "{{.RoleName}}-{{unix_time}}-{{random 4}}"
 
   roles = [
     {

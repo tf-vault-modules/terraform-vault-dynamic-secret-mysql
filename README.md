@@ -79,6 +79,12 @@ GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;
 
 and use test-db in your module call.
 
+**Q:** What is going to happen if I don't have specified database in MySQL?
+
+**A:** This module will still generate user but it won't be able to do much.
+
+
+
 ## Providers
 
 | Name | Version |
@@ -121,6 +127,8 @@ and use test-db in your module call.
 | <a name="input_tls_ca"></a> [tls\_ca](#input\_tls\_ca) | x509 CA file for validating the certificate presented by the MySQL server. Must be PEM encoded. | `string` | `""` | no |
 | <a name="input_tls_certificate_key"></a> [tls\_certificate\_key](#input\_tls\_certificate\_key) | x509 certificate for connecting to the database. This must be a PEM encoded version of the private key and the certificate combined | `string` | `""` | no |
 | <a name="input_token_display_name"></a> [token\_display\_name](#input\_token\_display\_name) | Vault Token display name | `string` | `"dynamic-engine-vending-admin"` | no |
+| <a name="input_username_prefix"></a> [username\_prefix](#input\_username\_prefix) | Prefix for user created in database | `string` | `"v-"` | no |
+| <a name="input_username_template"></a> [username\_template](#input\_username\_template) | For Vault v1.7+. The template to use for username generation. See the Vault docs | `string` | `"{{.RoleName}}-{{(random 8)}}"` | no |
 | <a name="input_vault_mount_path"></a> [vault\_mount\_path](#input\_vault\_mount\_path) | Database secret engine mount path | `string` | `"database"` | no |
 | <a name="input_vault_namespace"></a> [vault\_namespace](#input\_vault\_namespace) | Vault Namespace | `string` | `"root"` | no |
 <!-- END_TF_DOCS -->
