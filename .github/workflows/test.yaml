@@ -83,8 +83,7 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/testorg1-wp_vault_db_1 username | TEST
-      # database/creds/maginfo-wp-1 username | TEST
+            database/creds/testorg-wp-1 username | TEST
 
       # database/creds/testorg-wp_vault_test username | TEST
       # - name: Clear
