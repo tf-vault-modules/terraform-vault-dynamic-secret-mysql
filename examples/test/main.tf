@@ -10,7 +10,7 @@ module "vault_dynamic_secret_mysql" {
   vault_mount_path = "database"
   db_username      = "vault-admin"
   db_password      = "123123"
-  db_url           = "mariadb:3306"
+  db_url           = "192.168.50.241:3306"
   connection_name  = "mysql"
   allowed_roles    = ["*"]
 
@@ -40,8 +40,8 @@ module "vault_dynamic_secret_mysql" {
       quota : {}
     },
     {
-      role_name : "dnb"
-      database_name : "wp-1"
+      role_name : "maginfo-wp-2"
+      database_name : "wp-2"
     },
     {
       role_name : "maginfo"

@@ -9,13 +9,13 @@ on:
     branches:
       - main
 env:
-  VAULT_ADDR: http://vault:8200
+  VAULT_ADDR: http://192.168.50.241:8200
   VAULT_TOKEN: root
 jobs:
   oidc:
     runs-on: ubuntu-latest
-    container:
-      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
+    # container:
+    #   image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
 
     permissions:
       contents: read  # checkout repository
@@ -43,7 +43,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Verify MySQL connection from host
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 -uroot -p123123 -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
@@ -78,16 +81,16 @@ jobs:
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          exportEnv: false
-          url: http://vault:8200
+          # exportEnv: false
+          url: http://192.168.50.241:8200
           method: token
           token: root
           secrets: |
             database/creds/maginfo-wp-1 username | TEST
 
-      - name: Clear
-        id: clear
-        if: always()
-        run: |
-          cd examples/test
-          terraform destroy -auto-approve -refresh=false
+      # - name: Clear
+      #   id: clear
+      #   if: always()
+      #   run: |
+      #     cd examples/test
+      #     terraform destroy -auto-approve -refresh=false
