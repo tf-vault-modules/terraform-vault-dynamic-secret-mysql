@@ -33,17 +33,17 @@ jobs:
           VAULT_LOG_LEVEL: debug
         options: >-
           --cap-add=IPC_LOCK
-      # mariadb:
-      #   image: mysql:5.7
-      #   env:
-      #     MYSQL_HOST: 127.0.0.1
-      #     MYSQL_USER: vault-admin
-      #     MYSQL_PASSWORD: paSSw0rD
-      #     MYSQL_ROOT_PASSWORD: root
-      #     MYSQL_DATABASE: wp_vault_test
-      #   ports:
-      #       - 3306:3306
-      #   options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+      mariadb:
+        image: mysql:5.7
+        env:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_USER: vault-admin
+          MYSQL_PASSWORD: paSSw0rD
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wp_vault_test
+        ports:
+            - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       # - name: Verify MariaDB connection
       #   env:
@@ -52,10 +52,10 @@ jobs:
       #     while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
       #       sleep 1
       #     done
-      - uses: mirromutth/mysql-action@master
-        with:
-          mysql version: '8.0'
-          mysql root password: paSSw0rD
+      # - uses: mirromutth/mysql-action@master
+      #   with:
+      #     mysql version: '8.0'
+      #     mysql root password: paSSw0rD
 
       - uses: actions/checkout@v3
 
