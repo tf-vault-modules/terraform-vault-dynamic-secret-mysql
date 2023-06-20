@@ -43,15 +43,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Verify MySQL connection from host
-        run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           terraform_wrapper: false
 
+      - name: Verify MySQL connection from host
+        run: |
+          mysql --host 127.0.0.1 -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       # - name: Install Vault
       #   run: .github/scripts/install-vault.sh
 
