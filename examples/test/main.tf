@@ -23,7 +23,7 @@ module "vault_dynamic_secret_mysql" {
 
   roles = [
     {
-      role_name : "main"
+      role_name : "testorg"
       database_name : "wp-vault-test"
       quota : {
         max_leases : 10
@@ -35,17 +35,13 @@ module "vault_dynamic_secret_mysql" {
       ]
     },
     {
-      role_name : "vault-wp-organization"
-      database_name : "wp-vault-test"
+      role_name : "testorg1"
+      database_name : "wp-vault-db-2"
       quota : {}
     },
     {
-      role_name : "maginfo-wp-2"
-      database_name : "wp-2"
-    },
-    {
-      role_name : "maginfo"
-      database_name : "wp-1"
+      role_name : "testorg2"
+      database_name : "wp-vault-db-2"
     },
 
   ]

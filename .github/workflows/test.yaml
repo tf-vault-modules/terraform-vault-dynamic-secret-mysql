@@ -73,10 +73,6 @@ jobs:
       - run: echo ${{ steps.test.outputs }}
       - run: echo ${{ steps.test.outputs.stdout }}
 
-      # We've configured Vault, so now let's act as a user and try to read secrets!
-      #
-      # See test/main.tf
-      #
       # We've configured pull requests to be allowed to read the
       # secret path "secret/data/foo/bar".
       # We are unable to read "secret/data/main/secret".
@@ -89,7 +85,7 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/maginfo-wp-1 username | TEST
+            database/creds/testorg2-wp-vault-db-2 username | TEST
 
       # - name: Clear
       #   id: clear
