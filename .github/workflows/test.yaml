@@ -90,7 +90,7 @@ jobs:
       - run: echo ${{ steps.secrets.outputs.PASSWORD }}
       - name: Check connection to MySql with new user
         run: |
-          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show databases();"
+          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show databases;"
 
 
       # database/creds/testorg-wp_vault_test username | TEST
