@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - main
+env:
+  VAULT_ADDR: http://vault:8200
+  VAULT_TOKEN: root
 jobs:
   oidc:
     runs-on: ubuntu-latest
@@ -28,6 +31,8 @@ jobs:
           VAULT_DEV_ROOT_TOKEN_ID: root
         options: >-
           --cap-add=IPC_LOCK
+          -- -dev
+          -- -log-level=debug
       mariadb:
         image: mariadb:latest
         ports:
@@ -55,15 +60,12 @@ jobs:
         run: |
           # .github/scripts/prepare-vault.sh
 
-          cd examples/basic
+          cd examples/test
           terraform init
           terraform plan
           terraform apply -auto-approve
-        env:
-          VAULT_ADDR: http://vault:8200
-          VAULT_TOKEN: root
-      - run: echo {{ steps.test.outputs }}
-      - run: echo {{ steps.test.outputs }}
+      - run: echo ${{ steps.test.outputs }}
+      - run: echo ${{ steps.test.outputs }}
       - run: echo ${{ steps.test.outputs.stdout }}
 
       # We've configured Vault, so now let's act as a user and try to read secrets!
@@ -83,16 +85,10 @@ jobs:
           token: root
           secrets: |
             database/creds/main-wp-vault-test username | TEST
-        env:
-          VAULT_ADDR: http://vault:8200
-          VAULT_TOKEN: root
 
       - name: Clear
         id: clear
         if: always()
         run: |
-          cd examples/basic
+          cd examples/test
           terraform destroy -auto-approve -refresh=false
-        env:
-          VAULT_ADDR: http://vault:8200
-          VAULT_TOKEN: root
