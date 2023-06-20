@@ -23,6 +23,10 @@ module "vault_dynamic_secret_mysql" {
 
   roles = [
     {
+      role_name : "testorg--wp-1"
+      database_name : "wp_vault_test"
+    },
+    {
       role_name : "main"
       database_name : "wp-vault-test"
       quota : {
