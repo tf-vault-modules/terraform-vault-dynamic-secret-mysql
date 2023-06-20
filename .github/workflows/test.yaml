@@ -29,10 +29,9 @@ jobs:
           - 8200:8200
         env:
           VAULT_DEV_ROOT_TOKEN_ID: root
+          VAULT_LOG_LEVEL: debug
         options: >-
           --cap-add=IPC_LOCK
-          -- -dev
-          -- -log-level=debug
       mariadb:
         image: mariadb:latest
         ports:
