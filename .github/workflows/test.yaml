@@ -60,8 +60,8 @@ jobs:
 
       - name: Update vault-admin grants
         run: |
-          # mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp_vault_test;"
-          # mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
+          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp_vault_test;"
+          mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
 
       - name: Execute Terraform Plan
         id: test
@@ -82,7 +82,7 @@ jobs:
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          url: http://127.0.0.1:8200
+          url: http://vault:8200
           method: token
           token: root
           secrets: |
