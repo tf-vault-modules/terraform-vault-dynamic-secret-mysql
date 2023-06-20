@@ -40,6 +40,7 @@ jobs:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_USER: vault-admin
           MARIADB_PASSWORD: "123123"
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v3
@@ -50,7 +51,6 @@ jobs:
 
       - name: Verify MySQL connection from host
         run: |
-          sudo systemctl start mysql
           mysql --host 127.0.0.1 -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       # - name: Install Vault
       #   run: .github/scripts/install-vault.sh
