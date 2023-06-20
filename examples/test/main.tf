@@ -9,7 +9,7 @@ module "vault_dynamic_secret_mysql" {
 
   vault_mount_path = "database"
   db_username      = "vault-admin"
-  db_password      = "123123"
+  db_password      = "root"
   db_url           = "mariadb:3306"
   connection_name  = "mysql"
   allowed_roles    = ["*"]

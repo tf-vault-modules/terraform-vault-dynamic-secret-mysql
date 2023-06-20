@@ -35,12 +35,11 @@ jobs:
       mariadb:
         image: mysql:5.7
         env:
-            MYSQL_DATABASE: database
-            MYSQL_USER: foo
-            MYSQL_PASSWORD: bar
-            MYSQL_ROOT_PASSWORD: bar
+            MYSQL_USER: vault-admin
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
         ports:
-            - 3306
+            - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - uses: actions/checkout@v3
