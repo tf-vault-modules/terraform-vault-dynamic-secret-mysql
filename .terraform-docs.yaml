@@ -1,13 +1,9 @@
 formatter: markdown
 header-from: .header.md
 content: |-
-  Any arbitrary text can be placed anywhere in the content
-
   {{ .Header }}
 
   {{ .Providers }}
-
-  and they don't even need to be in the default order
 
   {{ .Outputs }}
 

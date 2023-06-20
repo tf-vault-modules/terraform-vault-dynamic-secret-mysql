@@ -109,7 +109,7 @@ jobs:
         method: token
         token: root
         secrets: |
-          database/creds/testorg2-wp-vault-db-2 username | TEST
+          database/creds/testorg-wp_vault_test username | TEST
     # - uses: actions/github-script@v6
     #   # if: github.event_name == 'pull_request'
     #   env:
