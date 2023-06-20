@@ -88,9 +88,7 @@ jobs:
 
       - name: Check connection to MySql with new user
         run: |
-          sudo apt update
-          sudo apt install mysql-client -y
-          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show tables();"
+          mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e -d wp-1 "show tables();"
 
 
       # database/creds/testorg-wp_vault_test username | TEST
