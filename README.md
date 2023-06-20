@@ -17,7 +17,8 @@
 
 ```hcl
 module "vault_dynamic_secret_mysql" {
-  source = "../.."
+  source  = "tf-vault-modules/dynamic-secrets-mysql/vault"
+  version = "1.0.4"
 
   vault_mount_path = "database"
   db_username = "vault-user"
