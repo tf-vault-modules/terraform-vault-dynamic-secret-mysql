@@ -45,12 +45,14 @@ jobs:
           --cap-add=IPC_LOCK
       mariadb:
         image: mysql:5.7
-        ports:
-          - 3306:3306
         env:
           MYSQL_USER: vault-admin
           MYSQL_PASSWORD: paSSw0rD
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports:
+            - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
     # - name: Set JWT Auth Token

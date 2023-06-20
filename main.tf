@@ -32,7 +32,6 @@ resource "vault_database_secret_backend_connection" "this" {
   ]
 }
 
-
 resource "vault_database_secret_backend_role" "this" {
   for_each = local.db_roles
   name     = each.value.role_name

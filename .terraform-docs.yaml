@@ -1,5 +1,26 @@
 formatter: markdown
 header-from: .header.md
+content: |-
+  Any arbitrary text can be placed anywhere in the content
+
+  {{ .Header }}
+
+  and even in between sections. also spaces will be preserved:
+
+  - item 1
+    - item 1-1
+    - item 1-2
+  - item 2
+  - item 3
+
+  {{ .Providers }}
+
+  and they don't even need to be in the default order
+
+  {{ .Outputs }}
+
+  {{ .Inputs }}  
+  end
 settings:
   anchor: true
   color: true
@@ -18,4 +39,4 @@ sort:
 
 output:
   file: README.md
-  mode: replace
+  mode: inject

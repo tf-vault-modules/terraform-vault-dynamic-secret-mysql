@@ -10,7 +10,7 @@ module "vault_dynamic_secret_mysql" {
   vault_mount_path = "database"
   db_username      = "vault-admin"
   db_password      = "paSSw0rD"
-  db_url           = "mariadb:3306"
+  db_url           = "127.0.0.1:3306"
   connection_name  = "mysql"
   allowed_roles    = ["*"]
 
@@ -31,7 +31,7 @@ module "vault_dynamic_secret_mysql" {
       # ONLY NEEDED PERMISSIONS FOR WORDPRESS DATABASE
       creation_statements = [
         "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",
-        "GRANT SELECT, UPDATE, INSERT, DELETE, ALTER, CREATE, DROP, ALTER, INDEX ON 'wp_vault_test'.* TO '{{name}}'@'%';"
+        "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, FILE, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON *.* TO '{{name}}'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       ]
     },
     {

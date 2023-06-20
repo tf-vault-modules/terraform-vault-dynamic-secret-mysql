@@ -32,7 +32,7 @@ on:
         options:
           - "All"
           - action_required
-          - cancelled
+          - canceled
           - failure
           - skipped
           - success
