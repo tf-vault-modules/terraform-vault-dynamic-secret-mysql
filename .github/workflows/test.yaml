@@ -15,8 +15,6 @@ env:
 jobs:
   oidc:
     runs-on: ubuntu-latest
-    # container:
-    #   image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
 
     permissions:
       contents: read  # checkout repository
@@ -42,7 +40,6 @@ jobs:
             - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
-      - uses: actions/checkout@v3
       - name: Verify MariaDB connection
         env:
           PORT: ${{ job.services.mariadb.ports[3306] }}
@@ -50,6 +47,7 @@ jobs:
           while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
             sleep 1
           done
+      - uses: actions/checkout@v3
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -66,12 +64,11 @@ jobs:
       - name: Setup Vault
         id: test
         run: |
-          # .github/scripts/prepare-vault.sh
-
           cd examples/test
           terraform init
           terraform plan
           terraform apply -auto-approve
+
       - run: echo ${{ steps.test.outputs }}
       - run: echo ${{ steps.test.outputs }}
       - run: echo ${{ steps.test.outputs.stdout }}
