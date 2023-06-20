@@ -2,7 +2,7 @@ locals {
 
   allowed_roles = [
     for item in var.roles : {
-      vault_role_name = "${item.role_name}-${item.database_name}"
+      vault_role_name = item.role_name
 
     } if try(item.disabled, false) == true
   ]
