@@ -91,12 +91,3 @@ jobs:
       - name: Check connection to MySql with new user
         run: |
           mysql --host mariadb -u${{ steps.secrets.outputs.USERNAME }} -p${{ steps.secrets.outputs.PASSWORD }} -e "show databases;"
-
-
-      # database/creds/testorg-wp_vault_test username | TEST
-      # - name: Clear
-      #   id: clear
-      #   if: always()
-      #   run: |
-      #     cd examples/test
-      #     terraform destroy -auto-approve -refresh=false
