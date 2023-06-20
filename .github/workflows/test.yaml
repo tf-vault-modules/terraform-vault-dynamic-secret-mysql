@@ -9,20 +9,18 @@ on:
     branches:
       - main
 env:
+  VAULT_NAMESPACE: "root"
   VAULT_ADDR: http://127.0.0.1:8200
   VAULT_TOKEN: root
-  # TF_VAR_VAULT_ADDR: http://127.0.0.1:8200
-  # TF_VAR_VAULT_TOKEN: root
 jobs:
   oidc:
     runs-on: ubuntu-latest
-    # container:
-    #   image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
+    container:
+      image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
 
     permissions:
       contents: read  # checkout repository
       id-token: write  # create
-
 
     services:
       vault:
@@ -37,9 +35,9 @@ jobs:
       mariadb:
         image: mysql:5.7
         env:
-            MYSQL_USER: vault-admin
-            MYSQL_PASSWORD: root
-            MYSQL_ROOT_PASSWORD: root
+          MYSQL_USER: vault-admin
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
         ports:
             - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -53,7 +51,7 @@ jobs:
             sleep 1
           done
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
 

@@ -4,6 +4,8 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -20,15 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: catthehacker/ubuntu:runner-latest # image with user 'runner:runner' built on tag 'act-latest'
-    # enveironment: production
+    # environment: production
+
     permissions:
       contents: read
       id-token: write
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-
+        working-directory: "examples/test"
     services:
       vault:
         image: hashicorp/vault:latest
@@ -36,18 +40,18 @@ jobs:
           - 8200:8200
         env:
           VAULT_DEV_ROOT_TOKEN_ID: root
+          VAULT_LOG_LEVEL: debug
         options: >-
           --cap-add=IPC_LOCK
-      maria:
-        image: mariadb:latest
+      mariadb:
+        image: mysql:5.7
         ports:
           - 3306:3306
         env:
-          VAULT_DEV_ROOT_TOKEN_ID: root
+          MYSQL_USER: vault-admin
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
 
-    env:
-      VAULT_TOKEN: root
-      VAULT_ADDR: http://vault:8200
     steps:
     # - name: Set JWT Auth Token
     #   id: auth-token
@@ -72,10 +76,65 @@ jobs:
       #   VAULT_ROLE: "git-onboarding"
       #   GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}
 
-    # Checkout the repository to the GitHub Actions runner
+      # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+    - uses: hashicorp/setup-terraform@v2
 
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      continue-on-error: true
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      continue-on-error: true
+
+    - uses: actions/github-script@v6
+      # if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+          <details><summary>Validation Output</summary>
+
+          \`\`\`\n
+          ${{ steps.validate.outputs.stdout }}
+          \`\`\`
+
+          </details>
+
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     # - name: Setup Terraform
     #   uses: hashicorp/setup-terraform@v1
@@ -86,11 +145,12 @@ jobs:
     # - name: Terraform Init
     #   run: |
     #     terraform init -input=false
+    # - run: terraform init
 
-    - name: terraform plan
-      uses: dflook/terraform-plan@v1
-      with:
-        path: examples/basic
+    # - name: terraform plan
+    #   uses: dflook/terraform-plan@v1
+    #   with:
+    #     path: examples/basic
         # auto_approve: truee
 
         # label: production
