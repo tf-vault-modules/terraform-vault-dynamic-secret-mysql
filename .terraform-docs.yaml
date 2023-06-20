@@ -3,9 +3,9 @@ header-from: .header.md
 footer-from: .footer.md
 content: |-
 
-  {{ include "./.content.md" }}
-
   {{ .Header }}
+
+  {{ include "./.content.md" }}
 
   {{ .Providers }}
 

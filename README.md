@@ -1,5 +1,17 @@
 <!-- BEGIN_TF_DOCS -->
 
+<!-- BEGIN\_TF\_DOCS -->
+# TF-Modules: Dynamic Secrets (MySql)
+
+| Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
+
+[![tflint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml)
+[![tfsec](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml)
+[![yamllint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml)
+[![misspell](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml)
+
+[![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
+
 
 <!-- markdownlint-disable MD001 -->
 # How to use this module
@@ -27,18 +39,6 @@ module "vault_dynamic_secret_mysql" {
 ```
 
 ## Module Documentation
-
-<!-- BEGIN\_TF\_DOCS -->
-# TF-Modules: Dynamic Secrets (MySql)
-
-| Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
-
-[![tflint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tflint.yaml)
-[![tfsec](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/tfsec.yaml)
-[![yamllint](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/yamllint.yaml)
-[![misspell](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/misspell.yaml)
-
-[![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
 
 ## Providers
 
