@@ -31,7 +31,7 @@ module "vault_dynamic_secret_mysql" {
       database_name: "wp-vault-test"
     },
     {
-      role_name: "dnb"
+      role_name: "tf-modules"
       database_name: "wp-1"
     },
   ]

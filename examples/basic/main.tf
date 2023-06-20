@@ -40,7 +40,7 @@ module "vault_dynamic_secret_mysql" {
       quota : {}
     },
     {
-      role_name : "dnb"
+      role_name : "role"
       database_name : "wp-1"
     },
     {
