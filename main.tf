@@ -17,7 +17,7 @@ resource "vault_database_secret_backend_connection" "this" {
   mysql {
     connection_url = "{{username}}:{{password}}@tcp(${var.db_url})/"
 
-    username_template       = "vault-user-{{.RoleName}}-{{(random 8)}}"
+    username_template       = "v-{{.RoleName}}-{{(random 8)}}"
     tls_ca                  = var.tls_ca
     tls_certificate_key     = var.tls_certificate_key
     username                = var.db_username
