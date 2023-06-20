@@ -50,7 +50,7 @@ jobs:
 
       - name: Verify MySQL connection from host
         run: |
-          mysql --host mariadb -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
+          mysql --host localhost -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
       # - name: Install Vault
       #   run: .github/scripts/install-vault.sh
 
