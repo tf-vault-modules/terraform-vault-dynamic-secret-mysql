@@ -84,5 +84,4 @@ module "vault_dynamic_secret_mysql" {
 | <a name="input_token_display_name"></a> [token\_display\_name](#input\_token\_display\_name) | Vault Token display name | `string` | `"dynamic-engine-vending-admin"` | no |
 | <a name="input_vault_mount_path"></a> [vault\_mount\_path](#input\_vault\_mount\_path) | Database secret engine mount path | `string` | `"database"` | no |
 | <a name="input_vault_namespace"></a> [vault\_namespace](#input\_vault\_namespace) | Vault Namespace | `string` | `"root"` | no |
-end
 <!-- END_TF_DOCS -->

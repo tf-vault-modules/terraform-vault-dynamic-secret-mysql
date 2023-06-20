@@ -9,8 +9,8 @@ module "vault_dynamic_secret_mysql" {
 
   vault_mount_path = "database"
   db_username      = "vault-admin"
-  db_password      = "123123"
-  db_url           = "192.168.50.241:3306"
+  db_password      = "Pa$$w0rd"
+  db_url           = "127.0.0.1:3306"
   connection_name  = "mysql"
   allowed_roles    = ["*"]
 
@@ -35,16 +35,16 @@ module "vault_dynamic_secret_mysql" {
       ]
     },
     {
-      role_name : "vault-wp-organization"
+      role_name : "google--wp-1"
       database_name : "wp-vault-test"
       quota : {}
     },
     {
-      role_name : "role"
+      role_name : "org1--wp-1"
       database_name : "wp-1"
     },
     {
-      role_name : "maginfo"
+      role_name : "maginfo-wp-1"
       database_name : "wp-1"
     },
 
