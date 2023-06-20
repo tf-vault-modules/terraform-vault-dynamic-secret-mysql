@@ -114,7 +114,7 @@ jobs:
         method: token
         token: root
         secrets: |
-          database/creds/testorg-wp_vault_test username | TEST
+          database/creds/maginfo-wp-1 username | TEST
     # - uses: actions/github-script@v6
     #   # if: github.event_name == 'pull_request'
     #   env:
