@@ -13,7 +13,7 @@ env:
   VAULT_ADDR: http://127.0.0.1:8200
   VAULT_TOKEN: root
 jobs:
-  oidc:
+  test-:
     runs-on: ubuntu-latest
 
     permissions:
@@ -34,7 +34,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_USER: vault-admin
-          MYSQL_PASSWORD: root
+          MYSQL_PASSWORD: paSSw0rD
           MYSQL_ROOT_PASSWORD: root
         ports:
             - 3306:3306
@@ -47,7 +47,9 @@ jobs:
           while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
             sleep 1
           done
+
       - uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -56,12 +58,8 @@ jobs:
       - name: Update vault-admin grants
         run: |
           mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
-      # - name: Install Vault
-      #   run: .github/scripts/install-vault.sh
 
-      # This preconfigures Vault such that we can authenticate to a Vault role
-      # and access secrets.
-      - name: Setup Vault
+      - name: Execute Terraform Plan
         id: test
         run: |
           cd examples/test
@@ -74,13 +72,12 @@ jobs:
       - run: echo ${{ steps.test.outputs.stdout }}
 
       # We've configured pull requests to be allowed to read the
-      # secret path "secret/data/foo/bar".
+      # secret path "database/creds/ORG-ROLE".
       # We are unable to read "secret/data/main/secret".
       - name: Import Secrets
         uses: hashicorp/vault-action@v2
         id: secrets
         with:
-          # exportEnv: false
           url: http://127.0.0.1:8200
           method: token
           token: root

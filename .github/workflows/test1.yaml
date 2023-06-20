@@ -49,7 +49,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_USER: vault-admin
-          MYSQL_PASSWORD: root
+          MYSQL_PASSWORD: paSSw0rD
           MYSQL_ROOT_PASSWORD: root
 
     steps:
