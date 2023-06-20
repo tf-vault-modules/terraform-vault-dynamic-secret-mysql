@@ -39,7 +39,7 @@ jobs:
           MYSQL_HOST: 127.0.0.1
           MYSQL_USER: vault-admin
           MYSQL_PASSWORD: paSSw0rD
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: paSSw0rD
           MYSQL_DATABASE: wp_vault_test
         ports:
             - 3306:3306
