@@ -11,8 +11,8 @@ on:
 env:
   VAULT_ADDR: http://127.0.0.1:8200
   VAULT_TOKEN: root
-  TF_VAR_VAULT_ADDR: http://127.0.0.1:8200
-  TF_VAR_VAULT_TOKEN: root
+  # TF_VAR_VAULT_ADDR: http://127.0.0.1:8200
+  # TF_VAR_VAULT_TOKEN: root
 jobs:
   oidc:
     runs-on: ubuntu-latest
@@ -57,9 +57,9 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: Verify MySQL connection from host
+      - name: Update vault-admin grants
         run: |
-          mysql --host 127.0.0.1 -uroot -proot -e "GRANT CREATE USER ON *.* TO 'vault-admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;"
+          mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO `vault-admin`@'%' WITH GRANT OPTION;"
       # - name: Install Vault
       #   run: .github/scripts/install-vault.sh
 
