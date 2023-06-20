@@ -83,7 +83,7 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/testorg-wp-1 username | USERNAME
+            database/creds/testorg-wp-1 username | USERNAME ;
             database/creds/testorg-wp-1 password | PASSWORD
 
       - name: Check connection to MySql with new user
