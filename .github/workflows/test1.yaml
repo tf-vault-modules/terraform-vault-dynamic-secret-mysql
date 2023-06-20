@@ -59,34 +59,10 @@ jobs:
         run: |
           sudo apt update
           sudo apt install mysql-client -y
-          mysql --host mariadb -uroot -ppaSSw0rD -e "CREATE DATABASE IF NOT EXISTS wp_vault_test;"
-          mysql --host mariadb -uroot -ppaSSw0rD -e "CREATE USER IF NOT EXISTS 'vault-admin'@'%' IDENTIFIED WITH mysql_native_password BY 'paSSw0rD';"
-          mysql --host mariadb -uroot -ppaSSw0rD -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
+          mysql --host mariadb -uroot -proot -e "CREATE DATABASE IF NOT EXISTS wp_vault_test;"
+          mysql --host mariadb -uroot -proot -e "CREATE USER IF NOT EXISTS 'vault-admin'@'%' IDENTIFIED WITH mysql_native_password BY 'paSSw0rD';"
+          mysql --host mariadb -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
 
-      # - name: Set JWT Auth Token
-      #   id: auth-token
-      #   run: |
-      #       export TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
-      #       # echo $TOKEN | jq .value | base64
-      #       echo "token=$(echo $TOKEN)" >> $GITHUB_OUTPUT
-
-      # - name: Get Vault Github Token
-      #   id: grab-token
-      #   run: |
-      #       export TOKEN_JSON=$(echo $GITHUB_OIDC_TOKEN | jq "{ jwt: .value, role: \"$VAULT_ROLE\" }")
-      #       # echo $TOKEN_JSON | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
-      #       # export VAULT_LOGIN_DATA=$(echo $TOKEN_JSON | curl -sSLf -X PUT -H "Content-Type: application/json" --data @- $VAULT_ADDR/v1/auth/jwt/login)
-
-      #       # echo $VAULT_LOGIN_DATA
-      #       # export VAULT_TOKEN=$(echo $VAULT_LOGIN_DATA | jq -r .auth.client_token)
-      #       # echo $VAULT_TOKEN
-      #       # echo "vault_token=$(echo $VAULT_TOKEN)" >> $GITHUB_OUTPUT
-
-        # env:
-        #   VAULT_ROLE: "git-onboarding"
-        #   GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}
-
-        # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
@@ -123,80 +99,3 @@ jobs:
           token: root
           secrets: |
             database/creds/testorg-wp-1 username | TEST
-    # - uses: actions/github-script@v6
-    #   # if: github.event_name == 'pull_request'
-    #   env:
-    #     PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     script: |
-    #       const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-    #       #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-    #       #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-    #       <details><summary>Validation Output</summary>
-
-    #       \`\`\`\n
-    #       ${{ steps.validate.outputs.stdout }}
-    #       \`\`\`
-
-    #       </details>
-
-    #       #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-
-    #       <details><summary>Show Plan</summary>
-
-    #       \`\`\`\n
-    #       ${process.env.PLAN}
-    #       \`\`\`
-
-    #       </details>
-
-    #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-
-    #       github.rest.issues.createComment({
-    #         issue_number: context.issue.number,
-    #         owner: context.repo.owner,
-    #         repo: context.repo.repo,
-    #         body: output
-    #       })
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    #   with:
-    #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    # - name: Terraform Init
-    #   run: |
-    #     terraform init -input=false
-    # - run: terraform init
-
-    # - name: terraform plan
-    #   uses: dflook/terraform-plan@v1
-    #   with:
-    #     path: examples/basic
-        # auto_approve: truee
-
-        # label: production
-        # workspace: prod
-        # var_file: env/prod.tfvars
-        # variables: |
-        #   turbo_mode=true
-        # backend_config_file: env/prod.backend
-        # backend_config: token=${{ secrets.BACKEND_TOKEN }}
-
-    # Generates an execution plan for Terraform
-    # - name: Terraform Plan
-    #   run: |
-    #     echo $VAULT_ADDR
-    #     echo $VAULT_NAMESPACE
-
-    #     cd examples/basic
-
-    #     terraform init
-    #     terraform plan -input=false
-    #   env:
-    #     TF_VAR_vault_github_token: ${{ steps.grab-token.outputs.VAULT_TOKEN }}
-    #     TF_VAR_vault_addr: ${{ env.VAULT_ADDR }}
-    #     TF_VAR_vault_namespace: ${{ env.VAULT_NAMESPACE }}
-    #     # TF_LOG: debug
