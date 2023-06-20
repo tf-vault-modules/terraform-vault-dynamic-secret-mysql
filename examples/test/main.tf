@@ -43,6 +43,10 @@ module "vault_dynamic_secret_mysql" {
       role_name : "testorg2"
       database_name : "wp_vault_db_2"
     },
+    {
+      role_name : "maginfo"
+      database_name : "wp-1"
+    },
 
   ]
 }
