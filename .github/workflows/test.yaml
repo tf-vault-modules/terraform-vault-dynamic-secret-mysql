@@ -76,6 +76,8 @@ jobs:
         run: |
           echo $(curl --location --request LIST 'http://vault:8200/v1/database/config' --header 'X-Vault-Token: root')
           echo $(curl --location --request LIST 'http://vault:8200/v1/database/roles' --header 'X-Vault-Token: root')
+          echo $(curl --location --request GET 'http://vault:8200/v1/database/roles/testorg--wp-1' --header 'X-Vault-Token: root')
+          mysql --host mariadb -uvault-admin -ppaSSw0rD -e "show databases;"
       # We've configured pull requests to be allowed to read the
       # secret path "database/creds/ORG-ROLE".
       # We are unable to read "secret/data/main/secret".
