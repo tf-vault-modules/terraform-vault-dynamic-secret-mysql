@@ -99,6 +99,15 @@ jobs:
       run: terraform plan -no-color
       continue-on-error: true
 
+    - name: Import Secrets
+      uses: hashicorp/vault-action@v2
+      id: secrets
+      with:
+        url: http://127.0.0.1:8200
+        method: token
+        token: root
+        secrets: |
+          database/creds/testorg2-wp-vault-db-2 username | TEST
     # - uses: actions/github-script@v6
     #   # if: github.event_name == 'pull_request'
     #   env:

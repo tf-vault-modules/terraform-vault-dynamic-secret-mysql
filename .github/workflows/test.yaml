@@ -58,6 +58,7 @@ jobs:
       - name: Update vault-admin grants
         run: |
           mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
+          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp-vault-test;"
 
       - name: Execute Terraform Plan
         id: test
@@ -82,7 +83,7 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/testorg2-wp-vault-db-2 username | TEST
+            database/creds/testorg-wp-vault-test username | TEST
 
       # - name: Clear
       #   id: clear

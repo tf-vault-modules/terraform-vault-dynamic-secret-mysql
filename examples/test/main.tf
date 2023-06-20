@@ -36,7 +36,7 @@ module "vault_dynamic_secret_mysql" {
     },
     {
       role_name : "testorg1"
-      database_name : "wp-vault-db-2"
+      database_name : "wp-vault-db-1"
       quota : {}
     },
     {
