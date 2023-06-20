@@ -28,7 +28,7 @@ module "vault_dynamic_secret_mysql" {
     },
     {
       role_name : "testorg1"
-      database_name : "wp_vault_test"
+      database_name : "wp_vault_db_1"
       quota : {
         max_leases : 10
       }
