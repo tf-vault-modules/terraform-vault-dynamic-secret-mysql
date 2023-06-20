@@ -23,7 +23,7 @@ module "vault_dynamic_secret_mysql" {
 
   roles = [
     {
-      role_name : "testorg"
+      role_name : "testorg--wp-1"
       database_name : "wp-1"
     },
     {

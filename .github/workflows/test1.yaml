@@ -103,8 +103,8 @@ jobs:
           method: token
           token: root
           secrets: |
-            database/creds/testorg-wp-1 username | USERNAME ;
-            database/creds/testorg-wp-1 password | PASSWORD
+            database/creds/testorg--wp-1 username | USERNAME ;
+            database/creds/testorg--wp-1 password | PASSWORD
 
       - run: echo ${{ steps.secrets.outputs.USERNAME }}
       - run: echo ${{ steps.secrets.outputs.PASSWORD }}
