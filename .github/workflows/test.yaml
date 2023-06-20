@@ -16,8 +16,8 @@ env:
 jobs:
   module-test:
     runs-on: ubuntu-latest
-    container:
-      image: catthehacker/ubuntu:runner-latest
+    # container:
+    #   image: catthehacker/ubuntu:runner-latest
 
     permissions:
       contents: read  # checkout repository
