@@ -12,7 +12,7 @@ content: |-
   {{ .Outputs }}
 
   {{ .Inputs }}  
-  end
+  
 settings:
   anchor: true
   color: true

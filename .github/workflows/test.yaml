@@ -15,8 +15,8 @@ env:
 jobs:
   module-test:
     runs-on: ubuntu-latest
-    # container:
-    #   image: catthehacker/ubuntu:runner-latest
+    container:
+      image: catthehacker/ubuntu:runner-latest
 
     permissions:
       contents: read  # checkout repository
@@ -38,7 +38,7 @@ jobs:
           MYSQL_USER: vault-admin
           MYSQL_PASSWORD: paSSw0rD
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: wp_vault_test
         ports:
             - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -60,8 +60,8 @@ jobs:
 
       - name: Update vault-admin grants
         run: |
-          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp_vault_test;"
-          mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
+          # mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE wp_vault_test;"
+          # mysql --host 127.0.0.1 -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'vault-admin'@'%' WITH GRANT OPTION;"
 
       - name: Execute Terraform Plan
         id: test
