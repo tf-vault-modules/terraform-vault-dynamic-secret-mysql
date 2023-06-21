@@ -40,7 +40,7 @@ module "vault_dynamic_secret_mysql" {
 
 ### Important Arguments
 
-**allowed_roles (Optional)** - Roles that can use this database connection. If you omit this argument, then list of roles will be generated from the *roles* list. Posstible values are ["*"] or list of roles ["role-1", "role-2", "role-3", ...]
+**allowed_roles (Optional)** - Roles that can use this database connection. If you omit this argument, then list of roles will be generated from the *roles* list. Possible values are ["*"] or list of roles ["role-1", "role-2", "role-3", ...]. If omitted, value is empty list ([]) and list is generated from the *roles* list.
 
 **lease_count_enabled** - Lease count quota; can be enable for Vault Enterprise only.
 
@@ -52,6 +52,7 @@ List of roles that will be created for database secret engine.
 
 **role_name**: Name of the role
 **database_name** (Optional): Not Used
+**allowed** (Optional): Removes role from allowed_roles list
 **creation_statements**: If you don't want to use default statements or if you need to specify statements ONLY FOR THIS role (ie. Role generates user that can access only one database, etc)
 **quota** (Optional):
   * Used to create rate limit quotas (on role endpoint)
@@ -83,7 +84,7 @@ List of roles that will be created for database secret engine.
 | <a name="input_db_url"></a> [db\_url](#input\_db\_url) | A URL containing connection information. See the Vault docs for an example. | `string` | n/a | yes |
 | <a name="input_db_username"></a> [db\_username](#input\_db\_username) | The database VAULT ADMIN username to authenticate with | `string` | n/a | yes |
 | <a name="input_roles"></a> [roles](#input\_roles) | Roles | `any` | n/a | yes |
-| <a name="input_allowed_roles"></a> [allowed\_roles](#input\_allowed\_roles) | Allowed roles | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+| <a name="input_allowed_roles"></a> [allowed\_roles](#input\_allowed\_roles) | Allowed roles | `list(string)` | `[]` | no |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name | `string` | `"mysql"` | no |
 | <a name="input_default_creation_statements"></a> [default\_creation\_statements](#input\_default\_creation\_statements) | SQL Statements to be executed for creation | `list(string)` | <pre>[<br>  "CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';",<br>  "GRANT SELECT ON *.* TO '{{name}}'@'%';"<br>]</pre> | no |
 | <a name="input_default_max_leases"></a> [default\_max\_leases](#input\_default\_max\_leases) | The maximum number of leases to be allowed by the quota rule. The max\_leases must be positive. | `number` | `"100"` | no |

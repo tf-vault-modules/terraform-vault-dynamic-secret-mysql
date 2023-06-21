@@ -10,7 +10,7 @@ variable "connection_name" {
 }
 
 variable "allowed_roles" {
-  default     = ["*"]
+  default     = []
   type        = list(string)
   description = "Allowed roles"
 }
