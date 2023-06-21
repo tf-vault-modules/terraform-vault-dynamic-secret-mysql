@@ -21,7 +21,7 @@ jobs:
 
     permissions:
       contents: read  # checkout repository
-      id-token: write  # create
+      # id-token: write  # create
 
     services:
       vault:

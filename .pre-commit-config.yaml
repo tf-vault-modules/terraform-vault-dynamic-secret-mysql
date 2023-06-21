@@ -1,3 +1,4 @@
+# https://pre-commit.com/hooks.html
 ---
 fail_fast: false
 minimum_pre_commit_version: "2.6.0"
@@ -8,12 +9,27 @@ repos:
     rev: v2.2.4
     hooks:
     - id: codespell
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: v0.12.0
+    hooks:
+    - id: markdownlint
+      args: [-s, .markdownlint.rb]   # MD033: Allow "Inline HTML"
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.81.0
     hooks:
       - id: terraform_docs
         always_run: true
       - id: terraform_fmt
+      # - id: terraform_checkov
+      #   args:
+      #     - --args=--skip-check CKV_GHA_4
+      #     - --args=--skip-check CKV_GHA_7
+      #     - --args=--quiet
+      - id: terrascan
+        args:
+          - --args=--non-recursive # avoids scan errors on subdirectories without Terraform config files
+          - --args=--verbose
+      # - id: tfupdate
       - id: terraform_tflint
         alias: terraform_tflint_nocreds
         name: terraform_tflint_nocreds
@@ -24,7 +40,6 @@ repos:
       - id: check-case-conflict
       - id: check-json
       - id: check-merge-conflict
-      - id: check-symlinks
       - id: check-yaml
         args:
           - --unsafe
