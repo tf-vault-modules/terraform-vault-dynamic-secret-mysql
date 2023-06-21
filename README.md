@@ -49,9 +49,13 @@ module "vault_dynamic_secret_mysql" {
 List of roles that will be created for database secret engine.
 
 **role_name**: Name of the role
+
 **database_name** (Optional): Not Used
+
 **allowed** (Optional): Removes role from allowed_roles list
+
 **creation_statements**: If you don't want to use default statements or if you need to specify statements ONLY FOR THIS role (ie. Role generates user that can access only one database, etc)
+
 **quota** (Optional):
 
 * Used to create rate limit quotas (on role endpoint)
