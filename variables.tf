@@ -85,6 +85,12 @@ variable "vault_mount_path" {
   description = "Database secret engine mount path"
 }
 
+variable "existing_engine" {
+  default     = false
+  type        = bool
+  description = "Existing Database Secret Engine"
+}
+
 variable "token_display_name" {
   default     = "dynamic-engine-vending-admin"
   type        = string

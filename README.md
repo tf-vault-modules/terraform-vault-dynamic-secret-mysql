@@ -125,6 +125,7 @@ and use test-db in your module call.
 | <a name="input_default_revocation_statements"></a> [default\_revocation\_statements](#input\_default\_revocation\_statements) | SQL Statements to be executed for revocation | `list(string)` | `null` | no |
 | <a name="input_default_rollback_statements"></a> [default\_rollback\_statements](#input\_default\_rollback\_statements) | SQL Statements to be executed for rollback | `list(string)` | `null` | no |
 | <a name="input_default_ttl"></a> [default\_ttl](#input\_default\_ttl) | Vault Namespace | `number` | `240` | no |
+| <a name="input_existing_engine"></a> [existing\_engine](#input\_existing\_engine) | Existing Database Secret Engine | `bool` | `false` | no |
 | <a name="input_lease_count_enabled"></a> [lease\_count\_enabled](#input\_lease\_count\_enabled) | ENTERPRISE ONLY! Manage lease count quotas which enforce the number of leases that can be created. <br>A lease count quota can be created at the root level or defined on a namespace or mount by specifying a path when creating the quota | `bool` | `false` | no |
 | <a name="input_max_connection_lifetime"></a> [max\_connection\_lifetime](#input\_max\_connection\_lifetime) | The maximum number of seconds to keep a connection alive for. | `number` | `null` | no |
 | <a name="input_max_idle_connections"></a> [max\_idle\_connections](#input\_max\_idle\_connections) | The maximum number of idle connections to maintain. | `number` | `null` | no |

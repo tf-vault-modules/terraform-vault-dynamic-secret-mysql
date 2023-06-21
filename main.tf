@@ -2,13 +2,16 @@
 # Vend TFC JWT auth method in the namespace for TFC Workspace
 #------------------------------------------------------------------------------
 
+
 resource "vault_mount" "db" {
+  count = var.existing_engine ? 0 : 1
+
   path = var.vault_mount_path
   type = "database"
 }
 
 resource "vault_database_secret_backend_connection" "this" {
-  backend   = vault_mount.db.path
+  backend   = var.vault_mount_path
   name      = var.connection_name
   namespace = var.vault_namespace
 
@@ -28,14 +31,14 @@ resource "vault_database_secret_backend_connection" "this" {
   }
 
   depends_on = [
-    vault_mount.db,
+    vault_mount.db
   ]
 }
 
 resource "vault_database_secret_backend_role" "this" {
   for_each = local.db_roles
   name     = each.value.role_name
-  backend  = vault_mount.db.path
+  backend  = var.vault_mount_path
 
   db_name = vault_database_secret_backend_connection.this.name
 

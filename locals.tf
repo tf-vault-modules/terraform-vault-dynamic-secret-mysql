@@ -1,5 +1,4 @@
 locals {
-
   allowed_roles = [
     for item in var.roles : {
       vault_role_name = item.role_name
