@@ -4,7 +4,7 @@
 
 You can always import it.
 
-```
+```bash
 terraform import module.vault_dynamic_secret_mysql.vault_mount.db YOUR_MOUNT_PATH
 ```
 

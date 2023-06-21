@@ -4,7 +4,7 @@ footer-from: .footer.md
 content: |-
 
   {{ .Header }}
-
+  
   {{ include "./.content.md" }}
 
   {{ .Providers }}

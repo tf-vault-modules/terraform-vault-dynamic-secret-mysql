@@ -9,8 +9,6 @@
 [![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
 [![Module Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml)
 
-
-<!-- markdownlint-disable MD001 -->
 # How to use this module
 
 ```hcl
@@ -55,11 +53,12 @@ List of roles that will be created for database secret engine.
 **allowed** (Optional): Removes role from allowed_roles list
 **creation_statements**: If you don't want to use default statements or if you need to specify statements ONLY FOR THIS role (ie. Role generates user that can access only one database, etc)
 **quota** (Optional):
-  * Used to create rate limit quotas (on role endpoint)
-  * If defined as {}, defaults are:
-    * rate: 10
-    * interval: 1
-    * block_interval: 10
+
+* Used to create rate limit quotas (on role endpoint)
+* If defined as {}, defaults are:
+  * rate: 10
+  * interval: 1
+  * block_interval: 10
 
 ## Providers
 
