@@ -9,7 +9,6 @@ module "vault_dynamic_secret_mysql" {
   # source  = "tf-vault-modules/dynamic-secrets-mysql/vault"
   # version = "1.0.x"
 
-
   vault_mount_path = "database"
   db_username      = "vault-admin"
   db_password      = "root"
