@@ -15,7 +15,7 @@ resource "vault_database_secret_backend_connection" "this" {
   name      = var.connection_name
   namespace = var.vault_namespace
 
-  allowed_roles = var.allowed_roles
+  allowed_roles = local.allowed_roles
 
   mysql {
     connection_url = "{{username}}:{{password}}@tcp(${var.db_url})/"

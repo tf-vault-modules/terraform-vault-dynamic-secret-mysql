@@ -15,11 +15,12 @@ module "vault_dynamic_secret_mysql" {
   db_password      = "Pa$$w0rd"
   db_url           = "127.0.0.1:3306"
   connection_name  = "mysql"
-  allowed_roles    = ["*"]
+  allowed_roles    = [] # Optional: ["*"] or manual list of roles. If omitted, will be generated from the roles list
 
   roles = [
     {
       role_name : "testorg--wp-1"
+      allowed : false
     },
     {
       role_name : "main"

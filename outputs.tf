@@ -4,16 +4,16 @@ output "namespace" {
 }
 
 output "backend" {
-  value       = ""
-  description = "Vault Dynamic Secret Engine"
+  value       = var.vault_mount_path
+  description = "Vault Dynamic Secret Engine Path"
 }
 
 output "roles" {
   value       = local.db_roles
-  description = "Dynamic Secret Role"
+  description = "Dynamic Secret Engine Roles"
 }
 
 output "allowed_roles" {
   value       = local.allowed_roles
-  description = "Dynamic Secret Role"
+  description = "Allowed Dynamic Secret Engine Roles"
 }
