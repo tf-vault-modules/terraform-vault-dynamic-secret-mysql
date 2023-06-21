@@ -12,7 +12,7 @@ module "vault_dynamic_secret_mysql" {
 
   vault_mount_path = "database"
   db_username      = "vault-admin"
-  db_password      = "Pa$$w0rd"
+  db_password      = "root"
   db_url           = "127.0.0.1:3306"
   connection_name  = "mysql"
   allowed_roles    = [] # Optional: ["*"] or manual list of roles. If omitted, will be generated from the roles list
