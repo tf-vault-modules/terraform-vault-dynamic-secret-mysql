@@ -1,14 +1,12 @@
 <!-- BEGIN_TF_DOCS -->
 
 <!-- BEGIN\_TF\_DOCS -->
-# TF-Modules: Dynamic Secrets (MySql)
+# TF-Modules: Hashicorp Vault Dynamic Secrets (MySql)
 
 | Deploys and configures MySql dynamic secrets engine in Hashicorp Vault with multiple roles.
 
 [![Linters](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/linters.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/linters.yaml)
-
 [![Integration Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/integration.yaml)
-
 [![Module Tests](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml/badge.svg)](https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/actions/workflows/test.yaml)
 
 
@@ -63,9 +61,17 @@ List of roles that will be created for database secret engine.
 
 ## FAQ
 
-Q: How can I restrict role to only one database?
+**Q:** What if I already have database secret engine enabled?
 
-A: Use creation_statements for that role ([Basic example](<https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/blob/5729abb21eb00c8b84ee6b53eec1ef0523998e8e/examples/basic/main.tf#L36>))
+**A:** You can always import it.
+
+```
+terraform import module.vault_dynamic_secret_mysql.vault_mount.db YOUR_MOUNT_PATH
+```
+
+**Q:** How can I restrict role to only one database?
+
+**A:** Use creation_statements for that role ([Basic example](<https://github.com/tf-vault-modules/terraform-vault-dynamic-secrets-mysql/blob/5729abb21eb00c8b84ee6b53eec1ef0523998e8e/examples/basic/main.tf#L36>))
 
 **Q:** Do I have to prepare MySQL/MariaDB vault-admin user?
 
@@ -83,8 +89,6 @@ and use test-db in your module call.
 **Q:** What is going to happen if I don't have specified database in MySQL?
 
 **A:** This module will still generate user but it won't be able to do much.
-
-
 
 ## Providers
 
