@@ -40,6 +40,8 @@ module "vault_dynamic_secret_mysql" {
 
 ### Important Arguments
 
+**allowed_roles (Optional)** - Roles that can use this database connection. If you omit this argument, then list of roles will be generated from the *roles* list. Posstible values are ["*"] or list of roles ["role-1", "role-2", "role-3", ...]
+
 **lease_count_enabled** - Lease count quota; can be enable for Vault Enterprise only.
 
 **default_creation_statements** - Module has integrated default creation statements, but this argument is for users who want to use different statements (also, there are: default_revocation_statements, default_renew_statements and default_rollback_statements). This will be applied to all defined roles
@@ -58,12 +60,6 @@ List of roles that will be created for database secret engine.
     * interval: 1
     * block_interval: 10
 
-
-## FAQ
-
-[FAQ Page](/FAQ.md)
-
-
 ## Providers
 
 | Name | Version |
@@ -74,10 +70,10 @@ List of roles that will be created for database secret engine.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_allowed_roles"></a> [allowed\_roles](#output\_allowed\_roles) | Dynamic Secret Role |
-| <a name="output_backend"></a> [backend](#output\_backend) | Vault Dynamic Secret Engine |
+| <a name="output_allowed_roles"></a> [allowed\_roles](#output\_allowed\_roles) | Allowed Dynamic Secret Engine Roles |
+| <a name="output_backend"></a> [backend](#output\_backend) | Vault Dynamic Secret Engine Path |
 | <a name="output_namespace"></a> [namespace](#output\_namespace) | Vault namespace |
-| <a name="output_roles"></a> [roles](#output\_roles) | Dynamic Secret Role |
+| <a name="output_roles"></a> [roles](#output\_roles) | Dynamic Secret Engine Roles |
 
 ## Inputs
 

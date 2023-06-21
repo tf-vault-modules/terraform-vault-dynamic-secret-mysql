@@ -1,9 +1,8 @@
 locals {
-  allowed_roles = [
-    for item in var.roles : {
-      vault_role_name = item.role_name
+  allowed_roles = length(var.allowed_roles) == 0 ? var.allowed_roles : [
+    for item in var.roles : item.role_name
 
-    } if try(item.disabled, false) == true
+    if try(item.disabled, false) == false
   ]
 
   db_roles = ({

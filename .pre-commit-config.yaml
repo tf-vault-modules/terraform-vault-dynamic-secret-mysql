@@ -4,6 +4,10 @@ minimum_pre_commit_version: "2.6.0"
 exclude: ".terraform"
 
 repos:
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+    - id: codespell
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.81.0
     hooks:
